@@ -1,0 +1,16 @@
+models:3
+1.voters
+2.candidates
+3.election
+ connected with elections with unique id 
+
+
+-----------------------------------------------------------
+
+first page create election or vote
+
+vote ask id password and id of election to vote
+
+create election ask add candidate and add voters
+
+
