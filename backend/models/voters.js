@@ -10,8 +10,8 @@ const voterSchema = new mongoose.Schema({
   eligibleElections: [
     {
       election: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Election"
+        type: string,
+        required: true
       },
       hasVoted: {
         type: Boolean,
