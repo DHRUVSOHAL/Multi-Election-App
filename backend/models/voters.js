@@ -10,7 +10,7 @@ const voterSchema = new mongoose.Schema({
   eligibleElections: [
     {
       election: {
-        type: string,
+        type: String,
         required: true
       },
       hasVoted: {

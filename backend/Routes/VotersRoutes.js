@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   res.send("Voters route working");
 }); 
 
-router.post('/login', async (req, res) => {
+router.get('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -56,7 +56,7 @@ router.post('/giveVote', async (req, res) => {
 
     // Check voter eligibility
     const electionEntry = voter.eligibleElections.find(
-      e => e.electionId === electionId
+      e => e.election === electionId
     );
 
     if (!electionEntry) {
