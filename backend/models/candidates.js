@@ -6,7 +6,7 @@ const CandidateSchema = new mongoose.Schema({
 
   candidateId: { type: String, required: true, unique: true },
 
-  election: {
+  electionId: {
     type: String,
     required: true
   },

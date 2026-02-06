@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const ElectionSchema = new mongoose.Schema({
   title: { type: String, required: true, unique: true },
@@ -11,4 +12,10 @@ const ElectionSchema = new mongoose.Schema({
   
 });
 
+ElectionSchema.pre('save', async function () {//next is not defined because arrow function not used
+  if (!this.isModified('password')) return;
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 module.exports = mongoose.model('Election', ElectionSchema);

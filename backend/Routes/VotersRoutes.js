@@ -28,7 +28,7 @@ catch (err) {
 });
 
 
-router.post('/giveVote', async (req, res) => {
+router.put('/giveVote', async (req, res) => {
   try {
     const { username, electionId, candidateId } = req.body;
 

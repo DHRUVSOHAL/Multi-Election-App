@@ -5,7 +5,6 @@ const Election = require('./../models/Election.js');
 const Voter = require('./../models/voters.js');
 const Candidate = require('./../models/candidates.js');
 
-
 // ================= TEST ROUTE =================
 router.get('/', (req, res) => {
   res.send("Election route working");
@@ -15,12 +14,14 @@ router.get('/', (req, res) => {
 // ================= CREATE ELECTION =================
 router.post('/', async (req, res) => {
   try {
+
     const existing = await Election.findOne({ electionId: req.body.electionId });
     if (existing) {
       return res.status(400).json({ message: "Election ID already exists" });
     }
 
     const election = await Election.create(req.body);
+    const response=await election.save();
     res.status(201).json({ message: "Election created", election });
 
   } catch (err) {
@@ -76,9 +77,9 @@ router.post('/addVoters', async (req, res) => {
 
 
 // ================= GET ALL VOTERS =================
-router.get('/voters', async (req, res) => {
+router.get('/voters/:electionId', async (req, res) => {
   try {
-    const voters = await Voter.find();
+    const voters = await Voter.find({ "eligibleElections.election": req.params.electionId });
     res.status(200).json(voters);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -139,9 +140,9 @@ router.post('/addCandidates', async (req, res) => {
 
 
 // ================= GET ALL CANDIDATES =================
-router.get('/candidates', async (req, res) => {
+router.get('/candidates/:electionId', async (req, res) => {
   try {
-    const candidates = await Candidate.find();
+    const candidates = await Candidate.find({ electionId: req.params.electionId });
     res.status(200).json(candidates);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -150,10 +151,10 @@ router.get('/candidates', async (req, res) => {
 
 
 // ================= UPDATE CANDIDATE =================
-router.put('/updateCandidate/:candidateId', async (req, res) => {
+router.put('/updateCandidate/:id', async (req, res) => {
   try {
     const candidate = await Candidate.findByIdAndUpdate(
-      req.params.candidateId,
+      req.params.id,
       req.body,
       { new: true }
     );
@@ -169,9 +170,9 @@ router.put('/updateCandidate/:candidateId', async (req, res) => {
 
 
 // ================= DELETE CANDIDATE =================
-router.delete('/deleteCandidate/:candidateId', async (req, res) => {
+router.delete('/deleteCandidate/:id', async (req, res) => {
   try {
-    const candidate = await Candidate.findByIdAndDelete(req.params.candidateId);
+    const candidate = await Candidate.findByIdAndDelete(req.params.id);
 
     if (!candidate) return res.status(404).json({ message: "Candidate not found" });
 
@@ -183,48 +184,56 @@ router.delete('/deleteCandidate/:candidateId', async (req, res) => {
 });
 
 
-// ================= GET ELECTION + CANDIDATES =================
-router.get('/:electionId', async (req, res) => {
+// ================= SEE RESULTS (MUST BE ABOVE /:electionId) =================
+router.get('/results/:electionId', async (req, res) => {
   try {
-    const election = await Election.findOne({ electionId: req.params.electionId });
+    const electionId = req.params.electionId.trim();
 
-    if (!election) return res.status(404).json({ message: "Election not found" });
+    const election = await Election.findOne({ electionId: electionId });
+    if (!election) {
+      return res.status(404).json({ message: "Election not found" });
+    }
 
-    const candidates = await Candidate.find({
-      election: req.params.electionId
+    const candidates = await Candidate.find({ electionId: electionId })
+      .select('name votes -_id');
+
+    return res.json({
+      electionId,
+      title: election.title,
+      results: candidates
     });
 
-    res.status(200).json({
-      election,
-      candidates
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      message: "Error fetching election",
-      error: error.message
-    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
 
+
 // ================= DELETE ELECTION + CLEANUP =================
-router.delete('/:electionId', async (req, res) => {
+router.delete('/:password/:electionId', async (req, res) => {
   try {
-    const electionId = req.params.electionId;
+   const election = await Election.findOne({ electionId: req.params.electionId });
 
-    const election = await Election.findOneAndDelete({ electionId });
+if (!election) {
+  return res.status(404).json({ message: "Election not found" });
+}
 
-    if (!election) return res.status(404).json({ message: "Election not found" });
+const isMatch = await bcrypt.compare(req.params.password, election.password);
+if (!isMatch) {
+  return res.status(403).json({ message: "Incorrect password" });
+}
 
-    // Remove election from voters
+// Now delete
+await Election.deleteOne({ electionId: req.params.electionId });
+
     await Voter.updateMany(
       {},
-      { $pull: { eligibleElections: { election: electionId } } }
+      { $pull: { eligibleElections: { election: req.params.electionId } } }
     );
 
-    // Delete candidates
-    await Candidate.deleteMany({ election: electionId });
+    // Delete candidates for that election
+    await Candidate.deleteMany({ electionId: req.params.electionId });
 
     res.status(200).json({
       message: "Election deleted + voters cleaned + candidates removed",

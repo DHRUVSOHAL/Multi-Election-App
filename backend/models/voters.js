@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const voterSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: { type: Number, required: true },
@@ -19,5 +20,11 @@ const voterSchema = new mongoose.Schema({
       }
     }
   ]
+});
+voterSchema.pre('save', async function () {//next is not defined because arrow function not used
+  if (!this.isModified('password')) return;
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 module.exports = mongoose.model('voters', voterSchema);

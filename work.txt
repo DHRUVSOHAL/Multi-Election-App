@@ -9,7 +9,7 @@ models:3
 
 first page create election or vote
 
-vote ask id password and id of election to vote
+voter asked id password and id of election to vote
 
 create election ask add candidate and add voters
 
