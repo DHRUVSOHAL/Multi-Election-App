@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Create Election</title>
+</head>
+
+<body class="bg-gray-100">
+
+  <div class="min-h-screen flex items-center justify-center px-4 mt-20">
+
+    <div class="bg-white w-full max-w-2xl rounded-xl shadow-lg p-8">
+
+      <!-- Header -->
+      <h1 class="text-3xl font-bold text-gray-800 mb-2 justify-center flex items-center gap-2">
+        Create New Election 🗳️
+      </h1>
+      <p class="text-gray-500 mb-6">
+        Fill in election details carefully
+      </p>
+
+      <!-- Form -->
+      <form class="space-y-5">
+
+        <!-- Title -->
+        <div>
+          <label class="block text-sm font-semibold mb-1">Election Title</label>
+          <input type="text" placeholder="Student Council Election"
+            class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block text-sm font-semibold mb-1">Description</label>
+          <textarea rows="3" placeholder="Election details..."
+            class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+        </div>
+
+        <!-- Dates -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold mb-1">Start Date</label>
+            <input type="date"
+              class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-1">End Date</label>
+            <input type="date"
+              class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+        </div>
+
+        <!-- Election ID -->
+        <div>
+          <label class="block text-sm font-semibold mb-1">Election ID</label>
+          <input type="text" placeholder="ELEC-2026-001"
+            class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <!-- Admin Password -->
+        <div>
+          <label class="block text-sm font-semibold mb-1">Admin Password</label>
+          <input type="password" placeholder="Secure password"
+            class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <!-- Active Toggle -->
+        <div class="flex items-center gap-3">
+          <input type="checkbox" checked class="w-5 h-5 accent-blue-600">
+          <span class="text-sm font-medium text-gray-700">Set Election Active</span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition">
+          Create Election
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

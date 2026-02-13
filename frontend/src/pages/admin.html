@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Admin Panel</title>
+</head>
+
+<body class="bg-gray-100">
+
+  <div class="min-h-screen p-6">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-800">
+        Election Admin Panel ⚙️
+      </h1>
+      <p class="text-gray-500 mt-1">
+        Manage voters, candidates, and elections
+      </p>
+    </div>
+
+    <!-- Action Buttons Grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Add Voter -->
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="font-semibold text-lg mb-3">Add Voter</h2>
+        <p class="text-gray-600 text-sm mb-4">Register a new voter</p>
+        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+          Add Voter
+        </button>
+      </div>
+
+      <!-- Add Candidate -->
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="font-semibold text-lg mb-3">Add Candidate</h2>
+        <p class="text-gray-600 text-sm mb-4">Register election candidates</p>
+        <button class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+          Add Candidate
+        </button>
+      </div>
+
+      <!-- Delete Voter -->
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="font-semibold text-lg mb-3">Delete Voter</h2>
+        <p class="text-gray-600 text-sm mb-4">Remove a voter record</p>
+        <button class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
+          Delete Voter
+        </button>
+      </div>
+
+      <!-- Delete Candidate -->
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="font-semibold text-lg mb-3">Delete Candidate</h2>
+        <p class="text-gray-600 text-sm mb-4">Remove candidate</p>
+        <button class="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600">
+          Delete Candidate
+        </button>
+      </div>
+
+      <!-- Manage Elections -->
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="font-semibold text-lg mb-3">Manage Elections</h2>
+        <p class="text-gray-600 text-sm mb-4">Activate / End elections</p>
+        <button class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">
+          Manage Elections
+        </button>
+      </div>
+
+      <!-- View Results -->
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="font-semibold text-lg mb-3">View Results</h2>
+        <p class="text-gray-600 text-sm mb-4">Check voting outcomes</p>
+        <button class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+          View Results
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
