@@ -54,6 +54,66 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// =======================
+// CREATE VOTER
+// =======================
+router.post('/addVoter', async (req, res) => {
+  try {
+
+    const { name, age, gender, username, password, electionId } = req.body;
+
+    if (!name || !age || !gender || !username || !password || !electionId) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const existingVoter = await Voter.findOne({ username });
+
+    if (existingVoter) {
+
+      const alreadyExists = existingVoter.eligibleElections.some(
+        e => e.election === electionId
+      );
+
+      if (alreadyExists) {
+        return res.status(400).json({ message: "Voter already registered in this election" });
+      }
+
+      existingVoter.eligibleElections.push({
+        election: electionId,
+        hasVoted: false
+      });
+
+      await existingVoter.save();
+
+      return res.status(200).json({
+        message: "Election added to existing voter",
+        voter: existingVoter
+      });
+    }
+
+    const newVoter = await Voter.create({
+      name,
+      age,
+      gender,
+      username,
+      password,
+      eligibleElections: [
+        {
+          election: electionId,
+          hasVoted: false
+        }
+      ]
+    });
+
+    res.status(201).json({
+      message: "New voter created",
+      voter: newVoter
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // =======================
 // VOTER DASHBOARD

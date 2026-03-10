@@ -38,18 +38,30 @@ const data = await res.json();
 
 if(res.ok){
 
-document.getElementById("message").innerText="Election Created Successfully ✅";
+// save JWT token
+localStorage.setItem("token", data.token);
 
-form.reset();
+// optional: store electionId too
+localStorage.setItem("electionId", electionId);
+
+document.getElementById("message").innerText =
+"Election Created Successfully ✅ Redirecting...";
+
+setTimeout(()=>{
+
+window.location.href = "admin.html";
+
+},1500);
 
 }else{
 
-document.getElementById("message").innerText=data.message;
+document.getElementById("message").innerText = data.message || "Error creating election";
 
 }
 
 }catch(err){
 
+console.error(err);
 document.getElementById("message").innerText="Server error";
 
 }

@@ -16,19 +16,35 @@ router.get('/', (req, res) => {
 // CREATE ELECTION (ADMIN)
 router.post('/', async (req, res) => {
   try {
+
     const existing = await Election.findOne({ electionId: req.body.electionId });
+
     if (existing) {
       return res.status(400).json({ message: "Election ID already exists" });
     }
 
-    const election = await Election.create(req.body);
-    res.status(201).json({ message: "Election created", election });
+    const hashedPassword = await bcrypt.hash(req.body.password,10);
+
+    const election = await Election.create({
+      ...req.body,
+      password: hashedPassword
+    });
+
+    const token = generateToken({
+      electionId: election.electionId,
+      role: "admin"
+    });
+
+    res.status(201).json({
+      message: "Election created",
+      election,
+      token
+    });
 
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-
 // ADD VOTER TO ELECTION (ADMIN)
 router.post('/addVoters', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
@@ -95,9 +111,9 @@ router.post('/adminLogin', async (req, res) => {
 });
 
 // UPDATE VOTER (ADMIN)
-router.put('/updateVoter/:voterId', jwtAuthMiddleware('admin'), async (req, res) => {
+router.put('/updateVoter/:username', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
-    const voter = await Voter.findByIdAndUpdate(req.params.voterId, req.body, { new: true });
+    const voter = await Voter.findOneAndUpdate({ username: req.params.username }, req.body, { new: true });
 
     if (!voter) return res.status(404).json({ message: "Voter not found" });
 
@@ -109,9 +125,9 @@ router.put('/updateVoter/:voterId', jwtAuthMiddleware('admin'), async (req, res)
 });
 
 // DELETE VOTER (ADMIN)
-router.delete('/deleteVoter/:voterId', jwtAuthMiddleware('admin'), async (req, res) => {
+router.delete('/deleteVoter/:username', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
-    const voter = await Voter.findByIdAndDelete(req.params.voterId);
+    const voter = await Voter.findOneAndDelete({ username: req.params.username });
 
     if (!voter) return res.status(404).json({ message: "Voter not found" });
 

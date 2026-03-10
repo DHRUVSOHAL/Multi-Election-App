@@ -1,7 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Voter Dashboard</title>
 
 <link rel="stylesheet" href="../css/output.css">
@@ -10,19 +12,83 @@
 
 <body class="bg-gray-100 min-h-screen">
 
-<div class="max-w-4xl mx-auto mt-10">
+<!-- Navbar -->
+<nav class="bg-blue-600 text-white p-4 flex justify-between items-center">
+<h1 class="text-xl font-bold">Voting System</h1>
 
-<h1 class="text-3xl font-bold text-center mb-8">
-Voter Dashboard
-</h1>
+<div>
+<span id="usernameDisplay" class="mr-4"></span>
+<button class="bg-red-500 px-3 py-1 rounded">Logout</button>
+</div>
+</nav>
 
-<div id="welcome" class="text-xl text-center mb-6 font-semibold"></div>
 
-<div id="elections" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+<!-- Main Container -->
+<div class="max-w-5xl mx-auto mt-8">
+
+<!-- Voter Info -->
+<div class="bg-white shadow-md rounded-xl p-6 mb-6">
+
+<h2 class="text-xl font-semibold mb-4">Voter Information</h2>
+
+<div class="grid grid-cols-2 gap-4">
+
+<p><strong>Name:</strong> <span id="voterName"></span></p>
+
+<p><strong>Age:</strong> <span id="voterAge"></span></p>
+
+<p><strong>Gender:</strong> <span id="voterGender"></span></p>
+
+<p><strong>Username:</strong> <span id="voterUsername"></span></p>
 
 </div>
 
-<script src="../js/dashboard.js"></script>
+</div>
+
+
+
+<!-- Eligible Elections -->
+<div class="bg-white shadow-md rounded-xl p-6">
+
+<div class="flex justify-between items-center mb-4">
+
+<h2 class="text-xl font-semibold">Eligible Elections</h2>
+
+<button id="addElectionBtn"
+class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+Add Election
+</button>
+
+</div>
+
+
+<!-- Election List -->
+<div id="electionList" class="space-y-4">
+
+<!-- Example Card (JS will duplicate this) -->
+<div class="border rounded-lg p-4 flex justify-between items-center">
+
+<div>
+
+<h3 class="font-semibold text-lg">Election Name</h3>
+
+<p class="text-sm text-gray-500">Status: Not Voted</p>
+
+</div>
+
+<button
+class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+Vote
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 </html>
+```

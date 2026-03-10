@@ -1,7 +1,12 @@
-const express=require('express')
+const express = require('express');
+const cors = require('cors');
 
-const app=express();
+const app = express();
 const db=require('./db.js')
+
+app.use(cors());          // allow frontend requests
+app.use(express.json());  // parse JSON
+
 
 
 app.get('/',(req,res)=>{

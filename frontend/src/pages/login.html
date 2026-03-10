@@ -1,88 +1,87 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voter Login</title>
+
 <link href="../css/output.css" rel="stylesheet">
-<body>
-    <body class="bg-gray-100">
 
-  <div class="min-h-screen flex items-center justify-center px-4">
+</head>
 
-    <div class="bg-white w-full max-w-md p-8 rounded-xl shadow-lg">
+<body class="bg-gray-100">
 
-      <!-- Heading -->
-      <h1 class="text-3xl font-bold text-gray-800 text-center mb-2">
-        Login 🔐
-      </h1>
+<div class="min-h-screen flex items-center justify-center px-4">
 
-      <p class="text-gray-500 text-center mb-6">
-        Login to access the voting system
-      </p>
+<div class="bg-white w-full max-w-md p-8 rounded-xl shadow-lg">
 
-      <!-- Form -->
-      <form class="space-y-5">
+<h1 class="text-3xl font-bold text-gray-800 text-center mb-2">
+Login 🔐
+</h1>
 
-        <!-- Username -->
-        <div>
-          <label class="block text-sm font-semibold mb-1">
-            Username
-          </label>
-          <input 
-            type="text" 
-            placeholder="Enter your username"
-            class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-          >
-        </div>
+<p class="text-gray-500 text-center mb-6">
+Login to access the voting system
+</p>
 
-        <!-- Password -->
-        <div>
-          <label class="block text-sm font-semibold mb-1">
-            Password
-          </label>
-          <input 
-            type="password" 
-            placeholder="Enter your password"
-            class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-          >
-        </div>
+<form id="loginForm" class="space-y-5">
 
-        <!-- Remember me -->
-        <div class="flex items-center justify-between text-sm">
-          <label class="flex items-center gap-2">
-            <input type="checkbox" class="accent-blue-600">
-            Remember me
-          </label>
+<div>
+<label class="block text-sm font-semibold mb-1">
+Username
+</label>
 
-          <a href="#" class="text-blue-600 hover:underline">
-            Forgot Password?
-          </a>
-        </div>
+<input
+id="username"
+type="text"
+placeholder="Enter your username"
+class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+required
+>
 
-        <!-- Login Button -->
-        <button id ="dashboard-btn" type="submit"
-          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition"
-        >
-          Login
-        </button>
+</div>
 
-      </form>
 
-      <!-- Back -->
-      <p class="text-center text-sm text-gray-500 mt-6">
-        <a href="index.html" class="text-blue-600 hover:underline">
-          ← Back to Home
-        </a>
-      </p>
+<div>
+<label class="block text-sm font-semibold mb-1">
+Password
+</label>
 
-    </div>
+<input
+id="password"
+type="password"
+placeholder="Enter your password"
+class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+required
+>
 
-  </div>
+</div>
 
-</body>
 
-  <script src="../js/index.js"></script>
+<button
+type="submit"
+class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition"
+>
+Login
+</button>
+
+</form>
+
+
+<p class="text-center text-sm text-gray-500 mt-6">
+
+<a href="index.html" class="text-blue-600 hover:underline">
+← Back to Home
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+<script src="../js/login.js"></script>
+
 </body>
 </html>
+```
