@@ -8,35 +8,83 @@ const bcrypt = require('bcrypt');
 
 const { jwtAuthMiddleware, generateToken } = require('./../jwt.js');
 
+
 // TEST ROUTE
 router.get('/', (req, res) => {
   res.send("Voters route working");
 });
 
+
+// =======================
 // VOTER LOGIN
+// =======================
 router.post('/login', async (req, res) => {
   try {
+
     const { username, password } = req.body;
 
+    if (!username || !password) {
+      return res.status(400).json({ message: "Username and password required" });
+    }
+
     const voter = await Voter.findOne({ username });
-    if (!voter) return res.status(404).json({ message: "Voter not found" });
+
+    if (!voter) {
+      return res.status(404).json({ message: "Voter not found" });
+    }
 
     const isMatch = await bcrypt.compare(password, voter.password);
-    if (!isMatch) return res.status(403).json({ message: "Incorrect password" });
 
-    const token = generateToken({ username, role: 'voter' });
+    if (!isMatch) {
+      return res.status(403).json({ message: "Incorrect password" });
+    }
 
-    res.status(200).json({ message: "Login successful", token });
+    const token = generateToken({
+      username: voter.username,
+      role: 'voter'
+    });
+
+    res.status(200).json({
+      message: "Login successful",
+      token
+    });
 
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// GIVE VOTE (VOTER ONLY)
+
+// =======================
+// VOTER DASHBOARD
+// =======================
+router.get('/dashboard', jwtAuthMiddleware('voter'), async (req, res) => {
+  try {
+
+    const voter = await Voter.findOne({ username: req.user.username });
+
+    if (!voter) {
+      return res.status(404).json({ message: "Voter not found" });
+    }
+
+    res.status(200).json({
+      name: voter.name,
+      elections: voter.eligibleElections
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// =======================
+// GIVE VOTE
+// =======================
 router.put('/giveVote', jwtAuthMiddleware('voter'), async (req, res) => {
   try {
-    const username = req.user.username; // SECURE SOURCE
+
+    const username = req.user.username;
     const { electionId, candidateId } = req.body;
 
     if (!electionId || !candidateId) {
@@ -44,17 +92,23 @@ router.put('/giveVote', jwtAuthMiddleware('voter'), async (req, res) => {
     }
 
     const voter = await Voter.findOne({ username });
-    if (!voter) return res.status(404).json({ message: "Voter not found" });
+
+    if (!voter) {
+      return res.status(404).json({ message: "Voter not found" });
+    }
 
     const election = await Election.findOne({ electionId });
-    if (!election) return res.status(404).json({ message: "Election not found" });
+
+    if (!election) {
+      return res.status(404).json({ message: "Election not found" });
+    }
 
     if (!election.isActive) {
       return res.status(403).json({ message: "Election is not active" });
     }
 
     const electionEntry = voter.eligibleElections.find(
-      e => e.election === electionId
+      e => String(e.election) === String(electionId)
     );
 
     if (!electionEntry) {
@@ -66,13 +120,16 @@ router.put('/giveVote', jwtAuthMiddleware('voter'), async (req, res) => {
     }
 
     const candidate = await Candidate.findOne({ candidateId, electionId });
+
     if (!candidate) {
       return res.status(404).json({ message: "Candidate not found" });
     }
 
-    await Candidate.updateOne(
+    // increment vote safely
+    await Candidate.findOneAndUpdate(
       { candidateId, electionId },
-      { $inc: { votes: 1 } }
+      { $inc: { votes: 1 } },
+      { new: true }
     );
 
     electionEntry.hasVoted = true;
@@ -80,7 +137,9 @@ router.put('/giveVote', jwtAuthMiddleware('voter'), async (req, res) => {
 
     await voter.save();
 
-    res.status(200).json({ message: "Vote recorded successfully" });
+    res.status(200).json({
+      message: "Vote recorded successfully"
+    });
 
   } catch (err) {
     console.error("Vote Error:", err);

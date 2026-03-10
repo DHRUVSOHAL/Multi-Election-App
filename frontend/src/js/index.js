@@ -4,6 +4,9 @@ document.getElementById('create-election-btn').addEventListener('click', functio
 document.getElementById('login-btn').addEventListener('click', function() {
     window.location.href = 'login.html';// login as voter
 });
+document.getElementById('dashboard-btn').addEventListener('click', function() {
+    window.location.href = 'dashboard.html';
+});
 document.getElementById('election-login-btn').addEventListener('click', function() {
     window.location.href = 'admin_login.html';//login as admin
 });
