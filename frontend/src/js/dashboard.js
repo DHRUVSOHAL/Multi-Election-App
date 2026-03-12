@@ -1,8 +1,13 @@
 const token = localStorage.getItem("token");
 
+if(!token){
+alert("Please login first");
+window.location.href="login.html";
+}
+
 async function loadDashboard(){
 
-const res = await fetch("http://localhost:3000/voters/dashboard",{
+const res = await fetch("http://localhost:1000/vote/dashboard",{
 headers:{
 "Authorization":`Bearer ${token}`
 }
@@ -10,24 +15,32 @@ headers:{
 
 const data = await res.json();
 
-document.getElementById("welcome").innerText = "Welcome " + data.name;
+document.getElementById("voterName").innerText = data.name;
+document.getElementById("voterAge").innerText = data.age;
+document.getElementById("voterGender").innerText = data.gender;
+document.getElementById("voterUsername").innerText = data.username;
+document.getElementById("usernameDisplay").innerText = data.username;
 
-const container = document.getElementById("elections");
+const container = document.getElementById("electionList");
 container.innerHTML="";
 
 data.elections.forEach(e => {
 
 let card = document.createElement("div");
 
-card.className = "bg-white p-6 rounded-xl shadow";
+card.className = "border rounded-lg p-4 flex justify-between items-center";
 
 card.innerHTML = `
-<h2 class="text-xl font-semibold mb-3">${e.election}</h2>
+<div>
+<h3 class="font-semibold text-lg">${e.election}</h3>
+<p class="text-sm text-gray-500">
+${e.hasVoted ? "Status: Voted" : "Status: Not Voted"}
+</p>
+</div>
 
 ${e.hasVoted 
 ? `<span class="text-green-600 font-semibold">Already Voted</span>`
-: `<button 
-class="voteBtn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+: `<button class="voteBtn bg-blue-500 text-white px-4 py-2 rounded"
 data-election="${e.election}">
 Vote
 </button>`
@@ -49,7 +62,7 @@ async function vote(event){
 const electionId = event.target.dataset.election;
 const candidateId = prompt("Enter Candidate ID");
 
-const res = await fetch("http://localhost:1000/voters/giveVote",{
+const res = await fetch("http://localhost:1000/vote/giveVote",{
 
 method:"PUT",
 
@@ -72,5 +85,10 @@ alert(data.message);
 loadDashboard();
 
 }
+
+document.getElementById("logoutBtn").addEventListener("click",()=>{
+localStorage.removeItem("token");
+window.location.href="login.html";
+});
 
 loadDashboard();

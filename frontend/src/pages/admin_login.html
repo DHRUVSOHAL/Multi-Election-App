@@ -1,71 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="../css/output.css" rel="stylesheet">
-<body class="bg-gray-100">
 
-  <div class="min-h-screen flex items-center justify-center px-4">
+<title>Admin Login</title>
+</head>
 
-    <!-- Login Card -->
-    <div class="bg-white w-full max-w-md rounded-xl shadow-lg p-8">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
-      <!-- Heading -->
-      <h1 class="text-3xl font-bold text-gray-800 text-center mb-2">
-        Admin Election Login 🗳️
-      </h1>
+<div class="bg-white p-8 rounded-xl shadow w-96">
 
-      <p class="text-gray-500 text-center mb-6">
-        Enter Election ID and Admin Password
-      </p>
+<h1 class="text-2xl font-bold mb-6 text-center">Admin Login ⚙️</h1>
 
-      <!-- Form -->
-      <form class="space-y-5">
+<div class="mb-4">
+<label class="block text-gray-700 mb-1">Election ID</label>
+<input
+id="electionId"
+type="text"
+class="w-full border rounded px-3 py-2"
+placeholder="Enter Election ID">
+</div>
 
-        <!-- Election ID -->
-        <div>
-          <label class="block text-sm font-semibold mb-1">
-            Election ID
-          </label>
-          <input 
-          type="text"
-          placeholder="ELEC-2026-001"
-          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
-        </div>
+<div class="mb-6">
+<label class="block text-gray-700 mb-1">Password</label>
+<input
+id="password"
+type="password"
+class="w-full border rounded px-3 py-2"
+placeholder="Enter Password">
+</div>
 
-        <!-- Password -->
-        <div>
-          <label class="block text-sm font-semibold mb-1">
-            Admin Password
-          </label>
-          <input 
-          type="password"
-          placeholder="Enter admin password"
-          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
-        </div>
+<button
+id="adminLoginBtn"
+class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+Login
+</button>
 
-        <!-- Login Button -->
-        <button id ="admin-login-btn"
-        class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition">
-          Login
-        </button>
+</div>
 
-      </form>
-
-      <!-- Back -->
-      <div class="text-center mt-6">
-        <a href="index.html" class="text-blue-600 hover:underline text-sm">
-          ← Back to Home
-        </a>
-      </div>
-
-    </div>
-
-  </div>
+<script src="../js/admin_login.js"></script>
 
 </body>
-<script src="../js/index.js"></script>
 </html>

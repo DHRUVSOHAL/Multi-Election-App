@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +17,9 @@
 
 <div>
 <span id="usernameDisplay" class="mr-4"></span>
-<button class="bg-red-500 px-3 py-1 rounded">Logout</button>
+<button id="logoutBtn" class="bg-red-500 px-3 py-1 rounded">Logout</button>
 </div>
 </nav>
-
 
 <!-- Main Container -->
 <div class="max-w-5xl mx-auto mt-8">
@@ -45,50 +43,18 @@
 
 </div>
 
-
-
 <!-- Eligible Elections -->
 <div class="bg-white shadow-md rounded-xl p-6">
 
-<div class="flex justify-between items-center mb-4">
+<h2 class="text-xl font-semibold mb-4">Eligible Elections</h2>
 
-<h2 class="text-xl font-semibold">Eligible Elections</h2>
-
-<button id="addElectionBtn"
-class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-Add Election
-</button>
-
-</div>
-
-
-<!-- Election List -->
-<div id="electionList" class="space-y-4">
-
-<!-- Example Card (JS will duplicate this) -->
-<div class="border rounded-lg p-4 flex justify-between items-center">
-
-<div>
-
-<h3 class="font-semibold text-lg">Election Name</h3>
-
-<p class="text-sm text-gray-500">Status: Not Voted</p>
-
-</div>
-
-<button
-class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-Vote
-</button>
+<div id="electionList" class="space-y-4"></div>
 
 </div>
 
 </div>
 
-</div>
-
-</div>
+<script src="../js/dashboard.js"></script>
 
 </body>
 </html>
-```

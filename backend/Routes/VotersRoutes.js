@@ -127,10 +127,13 @@ router.get('/dashboard', jwtAuthMiddleware('voter'), async (req, res) => {
       return res.status(404).json({ message: "Voter not found" });
     }
 
-    res.status(200).json({
-      name: voter.name,
-      elections: voter.eligibleElections
-    });
+  res.status(200).json({
+  name: voter.name,
+  age: voter.age,
+  gender: voter.gender,
+  username: voter.username,
+  elections: voter.eligibleElections
+});
 
   } catch (err) {
     res.status(500).json({ error: err.message });

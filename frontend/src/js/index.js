@@ -11,8 +11,9 @@ document.getElementById('election-login-btn').addEventListener('click', function
     window.location.href = 'admin_login.html';//login as admin
 });
 document.getElementById('admin-login-btn').addEventListener('click', function() {
-    window.location.href = 'admin.html';
+    window.location.href = 'admin.html';//login as admin
 });
+
 document.getElementById('submit-election-btn').addEventListener('click', function() {
     window.location.href = 'admin.html';
 });
