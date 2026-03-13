@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- 
- 
-<link href="../css/output.css" rel="stylesheet">
+
+  <link href="../css/output.css" rel="stylesheet">
+
   <title>Admin Panel</title>
 </head>
 
@@ -30,7 +30,8 @@
       <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
         <h2 class="font-semibold text-lg mb-3">Add Voter</h2>
         <p class="text-gray-600 text-sm mb-4">Register a new voter</p>
-        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        <button id="addVoterBtn"
+        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
           Add Voter
         </button>
       </div>
@@ -39,7 +40,8 @@
       <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
         <h2 class="font-semibold text-lg mb-3">Add Candidate</h2>
         <p class="text-gray-600 text-sm mb-4">Register election candidates</p>
-        <button class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+        <button id="addCandidateBtn"
+        class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
           Add Candidate
         </button>
       </div>
@@ -48,7 +50,8 @@
       <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
         <h2 class="font-semibold text-lg mb-3">Delete Voter</h2>
         <p class="text-gray-600 text-sm mb-4">Remove a voter record</p>
-        <button class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
+        <button id="deleteVoterBtn"
+        class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
           Delete Voter
         </button>
       </div>
@@ -57,7 +60,8 @@
       <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
         <h2 class="font-semibold text-lg mb-3">Delete Candidate</h2>
         <p class="text-gray-600 text-sm mb-4">Remove candidate</p>
-        <button class="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600">
+        <button id="deleteCandidateBtn"
+        class="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600">
           Delete Candidate
         </button>
       </div>
@@ -66,7 +70,8 @@
       <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
         <h2 class="font-semibold text-lg mb-3">Manage Elections</h2>
         <p class="text-gray-600 text-sm mb-4">Activate / End elections</p>
-        <button class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">
+        <button id="manageElectionBtn"
+        class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">
           Manage Elections
         </button>
       </div>
@@ -75,24 +80,30 @@
       <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
         <h2 class="font-semibold text-lg mb-3">View Results</h2>
         <p class="text-gray-600 text-sm mb-4">Check voting outcomes</p>
-        <button class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+        <button id="resultsBtn"
+        class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
           View Results
         </button>
       </div>
 
     </div>
-<!-- See All Voters -->
-<div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition margin-top-6px">
-  <h2 class="font-semibold text-lg mb-3 text-center">See All Voters</h2>
-  <p class="text-gray-600 text-sm mb-4 text-center">View voter list and vote status</p>
 
-  <button onclick="location.href='voters_list.html'"
-  class="w-full bg-yellow-600 text-white py-2 rounded hover:bg-yellow-700">
-    View Voters
-  </button>
-</div>
+    <!-- See All Voters -->
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition mt-6">
+      <h2 class="font-semibold text-lg mb-3 text-center">See All Voters</h2>
+      <p class="text-gray-600 text-sm mb-4 text-center">
+        View voter list and vote status
+      </p>
+
+      <button onclick="location.href='voters_list.html'"
+      class="w-full bg-yellow-600 text-white py-2 rounded hover:bg-yellow-700">
+        View Voters
+      </button>
+    </div>
+
   </div>
-  
+
+  <script src="../js/admin.js"></script>
 
 </body>
 </html>

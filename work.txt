@@ -14,3 +14,4 @@ voter asked id password and id of election to vote
 create election ask add candidate and add voters
 
 
+npx tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch

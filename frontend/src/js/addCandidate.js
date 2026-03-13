@@ -14,7 +14,7 @@ const name = document.getElementById("name").value;
 const candidateId = document.getElementById("candidateId").value;
 const party = document.getElementById("party").value;
 
-const res = await fetch("http://localhost:5000/elections/addCandidates",{
+const res = await fetch("http://localhost:1000/election/addCandidates",{
 
 method:"POST",
 

@@ -2,20 +2,31 @@
 <html>
 <head>
 <link href="../css/output.css" rel="stylesheet">
+<title>Add Voter</title>
 </head>
 
 <body class="bg-gray-100 flex justify-center items-center min-h-screen">
 
 <div class="bg-white p-6 rounded shadow w-96">
 
-<h2 class="text-xl font-bold mb-4">Add Voter</h2>
+<h2 class="text-xl font-bold mb-4 text-center">Add Voter</h2>
 
-<input id="name" placeholder="Name" class="border p-2 w-full mb-3">
-<input id="username" placeholder="Username" class="border p-2 w-full mb-3">
-<input id="age" placeholder="Age" class="border p-2 w-full mb-3">
-<input id="gender" placeholder="Gender" class="border p-2 w-full mb-3">
+<input id="name" placeholder="Name" class="border p-2 w-full mb-3 rounded">
 
-<button id="submitBtn" class="bg-blue-600 text-white w-full py-2 rounded">
+<input id="username" placeholder="Username" class="border p-2 w-full mb-3 rounded">
+
+<input id="age" type="number" placeholder="Age" class="border p-2 w-full mb-3 rounded">
+
+<select id="gender" class="border p-2 w-full mb-3 rounded">
+<option value="">Select Gender</option>
+<option value="M">Male</option>
+<option value="F">Female</option>
+<option value="other">Other</option>
+</select>
+
+<input id="password" type="password" placeholder="Password" class="border p-2 w-full mb-4 rounded">
+
+<button id="submitBtn" class="bg-blue-600 hover:bg-blue-700 text-white w-full py-2 rounded">
 Add Voter
 </button>
 
