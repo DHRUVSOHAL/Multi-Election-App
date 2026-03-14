@@ -1,18 +1,25 @@
 const token = localStorage.getItem("adminToken");
 
-function parseJwt(token){
-const base64 = atob(token.split('.')[1]);
-return JSON.parse(base64);
+function parseJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = atob(base64Url);
+  return JSON.parse(base64);
 }
 
 const decoded = parseJwt(token);
 const electionId = decoded.electionId;
 
-document.getElementById("addCandidateBtn").onclick = async ()=>{
+document.getElementById("candidateForm").addEventListener("submit",async(e)=>{
 
-const name = document.getElementById("name").value;
-const candidateId = document.getElementById("candidateId").value;
-const party = document.getElementById("party").value;
+e.preventDefault();
+
+const data={
+
+name:document.getElementById("name").value,
+candidateId:document.getElementById("candidateId").value,
+electionId:electionId
+
+};
 
 const res = await fetch("http://localhost:1000/election/addCandidates",{
 
@@ -20,19 +27,15 @@ method:"POST",
 
 headers:{
 "Content-Type":"application/json",
-"Authorization":`Bearer ${token}`
+"Authorization":"Bearer "+token
 },
 
-body:JSON.stringify({
-name,
-candidateId,
-party,
-electionId
-})
+body:JSON.stringify(data)
 
 });
 
-const data = await res.json();
-alert(data.message);
+const result=await res.json();
 
-}
+alert(result.message);
+
+});

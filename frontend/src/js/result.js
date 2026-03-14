@@ -1,42 +1,34 @@
 const token = localStorage.getItem("adminToken");
 
-if(!token){
-alert("Admin login required");
-window.location.href="admin_login.html";
-}
-
 function parseJwt(token){
-const base64 = atob(token.split('.')[1]);
-return JSON.parse(base64);
+return JSON.parse(atob(token.split('.')[1]));
 }
 
-const decoded = parseJwt(token);
-const electionId = decoded.electionId;
+const decoded=parseJwt(token);
+const electionId=decoded.electionId;
 
 async function loadResults(){
 
-const res = await fetch(`http://localhost:5000/elections/results/${electionId}`,{
+const res = await fetch(`http://localhost:5000/election/results/${electionId}`,{
 
 headers:{
-"Authorization":`Bearer ${token}`
+"Authorization":"Bearer "+token
 }
 
 });
 
 const data = await res.json();
 
-const table = document.getElementById("resultsTable");
+const table=document.getElementById("resultsTable");
 
-data.results.forEach(candidate => {
+data.results.forEach(c=>{
 
-const row = document.createElement("tr");
-
-row.innerHTML = `
-<td class="border p-2">${candidate.name}</td>
-<td class="border p-2 text-center">${candidate.votes}</td>
+table.innerHTML+=`
+<tr>
+<td class="p-3">${c.name}</td>
+<td class="p-3">${c.votes}</td>
+</tr>
 `;
-
-table.appendChild(row);
 
 });
 

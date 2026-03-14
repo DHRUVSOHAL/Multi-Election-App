@@ -10,3 +10,6 @@ document.getElementById('election-login-btn').addEventListener('click', function
 document.getElementById('submit-election-btn').addEventListener('click', function() {
     window.location.href = 'admin.html';
 });
+document.getElementById('register-btn').addEventListener('click', function() {
+    window.location.href = 'register.html';
+});

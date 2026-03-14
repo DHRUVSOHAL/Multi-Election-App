@@ -1,6 +1,5 @@
 const token = localStorage.getItem("adminToken");
 
-// If admin not logged in
 if (!token) {
   alert("Admin not logged in");
   window.location.href = "admin_login.html";
@@ -42,5 +41,5 @@ document.getElementById("manageElectionBtn").onclick = () => {
 };
 
 document.getElementById("resultsBtn").onclick = () => {
-  window.location.href = "results.html";
+  window.location.href = "result.html";
 };

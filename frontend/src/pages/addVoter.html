@@ -1,34 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<link href="../css/output.css" rel="stylesheet">
+<meta charset="UTF-8">
 <title>Add Voter</title>
+<link href="../css/output.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
-<div class="bg-white p-6 rounded shadow w-96">
+<div class="bg-white p-8 rounded-xl shadow-lg w-96">
 
-<h2 class="text-xl font-bold mb-4 text-center">Add Voter</h2>
+<h2 class="text-2xl font-bold mb-6 text-center">Add Voter</h2>
 
-<input id="name" placeholder="Name" class="border p-2 w-full mb-3 rounded">
+<form id="voterForm" class="space-y-4">
 
-<input id="username" placeholder="Username" class="border p-2 w-full mb-3 rounded">
+<input id="name"
+class="w-full border p-2 rounded"
+placeholder="Name" required>
 
-<input id="age" type="number" placeholder="Age" class="border p-2 w-full mb-3 rounded">
+<input id="age"
+type="number"
+class="w-full border p-2 rounded"
+placeholder="Age" required>
 
-<select id="gender" class="border p-2 w-full mb-3 rounded">
-<option value="">Select Gender</option>
+<select id="gender"
+class="w-full border p-2 rounded">
+
 <option value="M">Male</option>
 <option value="F">Female</option>
 <option value="other">Other</option>
+
 </select>
 
-<input id="password" type="password" placeholder="Password" class="border p-2 w-full mb-4 rounded">
+<input id="username"
+class="w-full border p-2 rounded"
+placeholder="Username" required>
 
-<button id="submitBtn" class="bg-blue-600 hover:bg-blue-700 text-white w-full py-2 rounded">
+<input id="password"
+type="password"
+class="w-full border p-2 rounded"
+placeholder="Password" required>
+
+<button
+class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
 Add Voter
 </button>
+
+</form>
 
 </div>
 

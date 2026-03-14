@@ -8,11 +8,6 @@ const bcrypt = require('bcrypt');
 
 const { jwtAuthMiddleware, generateToken } = require('./../jwt.js');
 
-// TEST ROUTE
-router.get('/', (req, res) => {
-  res.send("Election route working");
-});
-
 // CREATE ELECTION (ADMIN)
 router.post('/', async (req, res) => {
   try {
@@ -45,6 +40,7 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 // ADD VOTER TO ELECTION (ADMIN)
 router.post('/addVoters', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
@@ -176,17 +172,27 @@ router.put('/updateCandidate/:id', jwtAuthMiddleware('admin'), async (req, res) 
   }
 });
 
-// DELETE CANDIDATE (ADMIN)
-router.delete('/deleteCandidate/:id', jwtAuthMiddleware('admin'), async (req, res) => {
+router.delete('/deleteCandidate/:electionId/:candidateId', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
-    const candidate = await Candidate.findByIdAndDelete(req.params.id);
 
-    if (!candidate) return res.status(404).json({ message: "Candidate not found" });
+    const { electionId, candidateId } = req.params;
 
-    res.status(200).json({ message: "Candidate deleted", candidate });
+    const candidate = await Candidate.findOneAndDelete({
+      electionId: electionId,
+      candidateId: candidateId
+    });
+
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found in this election" });
+    }
+
+    res.status(200).json({ message: "Candidate deleted successfully" });
 
   } catch (error) {
-    res.status(500).json({ message: "Error deleting candidate", error: error.message });
+    res.status(500).json({
+      message: "Error deleting candidate",
+      error: error.message
+    });
   }
 });
 
@@ -229,6 +235,31 @@ router.delete('/:password/:electionId', jwtAuthMiddleware('admin'), async (req, 
 
   } catch (error) {
     res.status(500).json({ message: "Error deleting election", error: error.message });
+  }
+});
+router.get('/voters/:electionId', jwtAuthMiddleware('admin'), async (req, res) => {
+  try {
+
+    const electionId = req.params.electionId;
+
+    const voters = await Voter.find(
+      { "eligibleElections.election": electionId },
+      {
+        name:1,
+        username:1,
+        eligibleElections:1
+      }
+    );
+
+    res.json(voters);
+
+  } catch (error) {
+
+    res.status(500).json({
+      message:"Error fetching voters",
+      error:error.message
+    });
+
   }
 });
 

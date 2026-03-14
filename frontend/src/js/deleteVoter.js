@@ -1,23 +1,15 @@
 const token = localStorage.getItem("adminToken");
 
-function parseJwt(token){
-const base64 = atob(token.split('.')[1]);
-return JSON.parse(base64);
-}
+async function deleteVoter(){
 
-const decoded = parseJwt(token);
-const electionId = decoded.electionId;
+const username=document.getElementById("username").value;
 
-document.getElementById("deleteVoterBtn").onclick = async ()=>{
-
-const username = document.getElementById("username").value;
-
-const res = await fetch(`http://localhost:5000/elections/deleteVoter/${username}/${electionId}`,{
+const res = await fetch(`http://localhost:1000/election/deleteVoter/${username}`,{
 
 method:"DELETE",
 
 headers:{
-"Authorization":`Bearer ${token}`
+"Authorization":"Bearer "+token
 }
 
 });

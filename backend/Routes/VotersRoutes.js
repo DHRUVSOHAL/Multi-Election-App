@@ -53,41 +53,23 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 // =======================
-// CREATE VOTER
+// REGISTER VOTER
 // =======================
 router.post('/addVoter', async (req, res) => {
   try {
 
-    const { name, age, gender, username, password, electionId } = req.body;
+    const { name, age, gender, username, password } = req.body;
 
-    if (!name || !age || !gender || !username || !password || !electionId) {
+    if (!name || !age || !gender || !username || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
     const existingVoter = await Voter.findOne({ username });
 
     if (existingVoter) {
-
-      const alreadyExists = existingVoter.eligibleElections.some(
-        e => e.election === electionId
-      );
-
-      if (alreadyExists) {
-        return res.status(400).json({ message: "Voter already registered in this election" });
-      }
-
-      existingVoter.eligibleElections.push({
-        election: electionId,
-        hasVoted: false
-      });
-
-      await existingVoter.save();
-
-      return res.status(200).json({
-        message: "Election added to existing voter",
-        voter: existingVoter
+      return res.status(400).json({
+        message: "Username already exists"
       });
     }
 
@@ -97,16 +79,11 @@ router.post('/addVoter', async (req, res) => {
       gender,
       username,
       password,
-      eligibleElections: [
-        {
-          election: electionId,
-          hasVoted: false
-        }
-      ]
+      eligibleElections: []
     });
 
     res.status(201).json({
-      message: "New voter created",
+      message: "Voter registered successfully",
       voter: newVoter
     });
 
@@ -114,33 +91,6 @@ router.post('/addVoter', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-// =======================
-// VOTER DASHBOARD
-// =======================
-router.get('/dashboard', jwtAuthMiddleware('voter'), async (req, res) => {
-  try {
-
-    const voter = await Voter.findOne({ username: req.user.username });
-
-    if (!voter) {
-      return res.status(404).json({ message: "Voter not found" });
-    }
-
-  res.status(200).json({
-  name: voter.name,
-  age: voter.age,
-  gender: voter.gender,
-  username: voter.username,
-  elections: voter.eligibleElections
-});
-
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-
 // =======================
 // GIVE VOTE
 // =======================

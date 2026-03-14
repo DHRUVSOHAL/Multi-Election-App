@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <link href="../css/output.css" rel="stylesheet">
+<title>Add Candidate</title>
 </head>
 
 <body class="bg-gray-100 flex justify-center items-center min-h-screen">
 
-<div class="bg-white p-6 rounded shadow w-96">
+<div class="bg-white p-8 rounded-xl shadow w-96">
 
 <h2 class="text-xl font-bold mb-4">Add Candidate</h2>
 
-<input id="name" placeholder="Candidate Name" class="border p-2 w-full mb-3">
-<input id="candidateId" placeholder="Candidate ID" class="border p-2 w-full mb-3">
-<input id="party" placeholder="Party" class="border p-2 w-full mb-3">
+<form id="candidateForm" class="space-y-4">
 
-<button id="addCandidateBtn" class="bg-green-600 text-white w-full py-2 rounded">
+<input id="name"
+placeholder="Candidate Name"
+class="w-full border p-2 rounded">
+
+<input id="candidateId"
+placeholder="Candidate ID"
+class="w-full border p-2 rounded">
+
+<button
+class="w-full bg-green-600 text-white py-2 rounded">
 Add Candidate
 </button>
+
+</form>
 
 </div>
 
