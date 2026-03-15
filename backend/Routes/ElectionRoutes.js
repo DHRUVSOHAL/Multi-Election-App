@@ -8,7 +8,6 @@ const bcrypt = require('bcrypt');
 
 const { jwtAuthMiddleware, generateToken } = require('./../jwt.js');
 
-// CREATE ELECTION (ADMIN)
 router.post('/', async (req, res) => {
   try {
 
@@ -18,11 +17,8 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ message: "Election ID already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password,10);
-
     const election = await Election.create({
-      ...req.body,
-      password: hashedPassword
+      ...req.body   // password will be hashed automatically in pre-save
     });
 
     const token = generateToken({
@@ -40,11 +36,10 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 // ADD VOTER TO ELECTION (ADMIN)
 router.post('/addVoters', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
-    const { username, electionId, ...voterData } = req.body;
+    const { username} = req.body;
 
     let voter = await Voter.findOne({ username });
 
@@ -63,14 +58,7 @@ router.post('/addVoters', jwtAuthMiddleware('admin'), async (req, res) => {
       return res.status(200).json({ message: "Election added to existing voter", voter });
     }
 
-    const newVoter = await Voter.create({
-      ...voterData,
-      username,
-      eligibleElections: [{ election: electionId, hasVoted: false }]
-    });
-
-    res.status(201).json({ message: "New voter created", voter: newVoter });
-
+  
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

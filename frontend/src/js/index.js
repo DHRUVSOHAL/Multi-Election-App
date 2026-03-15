@@ -1,15 +1,27 @@
-document.getElementById('create-election-btn').addEventListener('click', function() {
-    window.location.href = 'createElection.html';
-});
-document.getElementById('login-btn').addEventListener('click', function() {
-    window.location.href = 'login.html';// login as voter
-});
-document.getElementById('election-login-btn').addEventListener('click', function() {
-    window.location.href = 'admin_login.html';//login as admin
-});
-document.getElementById('submit-election-btn').addEventListener('click', function() {
-    window.location.href = 'admin.html';
-});
-document.getElementById('register-btn').addEventListener('click', function() {
-    window.location.href = 'register.html';
-});
+const createElectionBtn = document.getElementById('create-election-btn');
+if (createElectionBtn) {
+    createElectionBtn.addEventListener('click', () => {
+        window.location.href = 'createElection.html';
+    });
+}
+
+const loginBtn = document.getElementById('login-btn');
+if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+        window.location.href = 'login.html';
+    });
+}
+
+const electionLoginBtn = document.getElementById('election-login-btn');
+if (electionLoginBtn) {
+    electionLoginBtn.addEventListener('click', () => {
+        window.location.href = 'admin_login.html';
+    });
+}
+
+const registerBtn = document.getElementById('register-btn');
+if (registerBtn) {
+    registerBtn.addEventListener('click', () => {
+        window.location.href = 'register.html';
+    });
+}

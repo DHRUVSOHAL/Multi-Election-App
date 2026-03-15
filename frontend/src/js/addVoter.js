@@ -15,11 +15,7 @@ e.preventDefault();
 
 const voterData = {
 
-name:document.getElementById("name").value,
-age:document.getElementById("age").value,
-gender:document.getElementById("gender").value,
 username:document.getElementById("username").value,
-password:document.getElementById("password").value,
 
 electionId:electionId
 
