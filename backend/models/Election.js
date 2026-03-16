@@ -12,11 +12,11 @@ const ElectionSchema = new mongoose.Schema({
   
 });
 
-ElectionSchema.pre('save', async function (next) {//next is not defined because arrow function not used
-  if (!this.isModified('password')) return;
+ElectionSchema.pre('save', async function () {//next is not defined because arrow function not used
+  if (!this.isModified('password')) return ;
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  next();
+  
 });
 module.exports = mongoose.model('Election', ElectionSchema);

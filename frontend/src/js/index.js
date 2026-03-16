@@ -25,3 +25,9 @@ if (registerBtn) {
         window.location.href = 'register.html';
     });
 }
+const manageElectionBtn = document.getElementById('manage-election-btn');
+if (manageElectionBtn) {
+    manageElectionBtn.addEventListener('click', () => {
+        window.location.href = 'manageElection.html';
+    });
+}

@@ -11,37 +11,40 @@ const electionId = decoded.electionId;
 
 document.getElementById("electionIdText").innerText = electionId;
 
-document
-.getElementById("deleteElectionBtn")
-.addEventListener("click", deleteElection);
-
+document.getElementById("deleteElectionBtn")
+  .addEventListener("click", deleteElection);
 
 async function deleteElection(){
+  const password = document.getElementById("password").value;
 
-const password = document.getElementById("password").value;
+  if(!password){
+    alert("Enter password");
+    return;
+  }
 
-if(!password){
-alert("Enter password");
-return;
-}
+  try {
+    const res = await fetch(
+      `http://localhost:1000/election/deleteElection`,
+      {
+        method: "DELETE",
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ password })  // ✅ send password to backend
+      }
+    );
 
-const res = await fetch(
-`http://localhost:1000/election/${password}/${electionId}`,
-{
-method:"DELETE",
-headers:{
-"Authorization":"Bearer "+token
-}
-}
-);
+    const data = await res.json();
 
-const data = await res.json();
+    alert(data.message);
 
-alert(data.message);
+    if(res.ok){
+      localStorage.removeItem("adminToken");
+      window.location.href = "admin_login.html";
+    }
 
-if(res.ok){
-localStorage.removeItem("adminToken");
-window.location.href="admin_login.html";
-}
-
+  } catch (err) {
+    alert("Error deleting election: " + err.message);
+  }
 }

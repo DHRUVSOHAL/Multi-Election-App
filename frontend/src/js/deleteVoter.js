@@ -4,7 +4,7 @@ async function deleteVoter(){
 
 const username=document.getElementById("username").value;
 
-const res = await fetch(`http://localhost:1000/election/deleteVoter/${username}`,{
+const res = await fetch(`http://localhost:1000/election/removeVoter/${username}`,{
 
 method:"DELETE",
 
@@ -15,6 +15,7 @@ headers:{
 });
 
 const data = await res.json();
+
 
 alert(data.message);
 

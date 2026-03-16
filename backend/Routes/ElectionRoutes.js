@@ -36,34 +36,43 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-// ADD VOTER TO ELECTION (ADMIN)
+//DONE
 router.post('/addVoters', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
-    const { username} = req.body;
+
+    const { username } = req.body;
+    const electionId = req.user.electionId;   // ✅ from token
 
     let voter = await Voter.findOne({ username });
 
-    if (voter) {
-      const alreadyExists = voter.eligibleElections.some(
-        e => e.election === electionId
-      );
-
-      if (alreadyExists) {
-        return res.status(400).json({ message: "Voter already registered in this election" });
-      }
-
-      voter.eligibleElections.push({ election: electionId, hasVoted: false });
-      await voter.save();
-
-      return res.status(200).json({ message: "Election added to existing voter", voter });
+    if (!voter) {
+      return res.status(404).json({ message: "Voter not found" });
     }
 
-  
+    const alreadyExists = voter.eligibleElections.some(
+      e => e.election === electionId
+    );
+
+    if (alreadyExists) {
+      return res.status(400).json({ message: "Voter already registered in this election" });
+    }
+
+    voter.eligibleElections.push({
+      election: electionId,
+      hasVoted: false
+    });
+
+    await voter.save();
+
+    res.status(200).json({
+      message: "Voter added to election",
+      voter
+    });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-
 // GET VOTERS (ADMIN)
 router.get('/voters/:electionId', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
@@ -74,7 +83,7 @@ router.get('/voters/:electionId', jwtAuthMiddleware('admin'), async (req, res) =
   }
 });
 
-// ADMIN LOGIN
+// ADMIN LOGIN (DONE)
 router.post('/adminLogin', async (req, res) => {
   try {
     const { electionId, password } = req.body;
@@ -93,77 +102,82 @@ router.post('/adminLogin', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-// UPDATE VOTER (ADMIN)
-router.put('/updateVoter/:username', jwtAuthMiddleware('admin'), async (req, res) => {
+// DELETE VOTER FROM ELECTION (ADMIN) DONE
+router.delete('/removeVoter/:username', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
-    const voter = await Voter.findOneAndUpdate({ username: req.params.username }, req.body, { new: true });
 
-    if (!voter) return res.status(404).json({ message: "Voter not found" });
+    const username = req.params.username;
+    const electionId = req.user.electionId;
 
-    res.status(200).json({ message: "Voter updated", voter });
+    const voter = await Voter.findOne({ username });
+
+    if (!voter) {
+      return res.status(404).json({ message: "Voter not found" });
+    }
+
+    const alreadyExists = voter.eligibleElections.some(
+      e => e.election === electionId
+    );
+
+    if (!alreadyExists) {
+      return res.status(400).json({
+        message: "Voter is not registered in this election"
+      });
+    }
+
+    const updatedVoter = await Voter.findOneAndUpdate(
+      { username },
+      {
+        $pull: {
+          eligibleElections: { election: electionId }
+        }
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "VOTER REMOVED FROM ELECTION",
+      voter: updatedVoter
+    });
 
   } catch (error) {
-    res.status(500).json({ message: "Error updating voter", error: error.message });
+    res.status(500).json({
+      message: "Error removing voter from election",
+      error: error.message
+    });
   }
 });
-
-// DELETE VOTER (ADMIN)
-router.delete('/deleteVoter/:username', jwtAuthMiddleware('admin'), async (req, res) => {
-  try {
-    const voter = await Voter.findOneAndDelete({ username: req.params.username });
-
-    if (!voter) return res.status(404).json({ message: "Voter not found" });
-
-    res.status(200).json({ message: "Voter deleted", voter });
-
-  } catch (error) {
-    res.status(500).json({ message: "Error deleting voter", error: error.message });
-  }
-});
-
-// ADD CANDIDATE (ADMIN)
+// ADD CANDIDATE (ADMIN) (DONE)
 router.post('/addCandidates', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
-    const existing = await Candidate.findOne({ candidateId: req.body.candidateId });
+    const { name, age, candidateId } = req.body;
+    
+    // 1. Check if candidate ID already exists
+    const existing = await Candidate.findOne({ candidateId });
     if (existing) return res.status(400).json({ message: "Candidate ID already exists" });
 
-    const candidate = await Candidate.create(req.body);
-    res.status(201).json({ message: "Candidate added", candidate });
+    // 2. USE THE ID FROM THE TOKEN (req.user), NOT THE BODY
+    const electionId = req.user.electionId;
 
+    const candidate = await Candidate.create({
+      name,
+      age,
+      candidateId,
+      electionId // Injected safely from the token
+    });
+
+    res.status(201).json({ message: "Candidate added successfully", candidate });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// GET CANDIDATES (ADMIN)
-router.get('/candidates/:electionId', jwtAuthMiddleware('admin'), async (req, res) => {
-  try {
-    const candidates = await Candidate.find({ electionId: req.params.electionId });
-    res.status(200).json(candidates);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// UPDATE CANDIDATE (ADMIN)
-router.put('/updateCandidate/:id', jwtAuthMiddleware('admin'), async (req, res) => {
-  try {
-    const candidate = await Candidate.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
-    if (!candidate) return res.status(404).json({ message: "Candidate not found" });
-
-    res.status(200).json({ message: "Candidate updated", candidate });
-
-  } catch (error) {
-    res.status(500).json({ message: "Error updating candidate", error: error.message });
-  }
-});
-
-router.delete('/deleteCandidate/:electionId/:candidateId', jwtAuthMiddleware('admin'), async (req, res) => {
+// DELETE CANDIDATE (ADMIN) DONE
+router.delete('/deleteCandidate/:candidateId', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
 
-    const { electionId, candidateId } = req.params;
+    const { candidateId } = req.params;
+    const electionId = req.user.electionId;   // ✅ from token
 
     const candidate = await Candidate.findOneAndDelete({
       electionId: electionId,
@@ -184,10 +198,10 @@ router.delete('/deleteCandidate/:electionId/:candidateId', jwtAuthMiddleware('ad
   }
 });
 
-// VIEW RESULTS (ADMIN)
-router.get('/results/:electionId', jwtAuthMiddleware('admin'), async (req, res) => {
+// VIEW RESULTS (ADMIN)(DONE)
+router.get('/result', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
-    const electionId = req.params.electionId.trim();
+    const electionId = req.user.electionId;   // ✅ from token
 
     const election = await Election.findOne({ electionId });
     if (!election) return res.status(404).json({ message: "Election not found" });
@@ -203,21 +217,21 @@ router.get('/results/:electionId', jwtAuthMiddleware('admin'), async (req, res) 
 });
 
 // DELETE ELECTION (ADMIN)
-router.delete('/:password/:electionId', jwtAuthMiddleware('admin'), async (req, res) => {
+router.delete('/deleteElection', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
-    const election = await Election.findOne({ electionId: req.params.electionId });
+    const election = await Election.findOne({ electionId: req.user.electionId });
     if (!election) return res.status(404).json({ message: "Election not found" });
 
-    const isMatch = await bcrypt.compare(req.params.password, election.password);
+    const isMatch = await bcrypt.compare(req.body.password, election.password);
     if (!isMatch) return res.status(403).json({ message: "Incorrect password" });
 
-    await Election.deleteOne({ electionId: req.params.electionId });
+    await Election.deleteOne({ electionId: req.user.electionId });
 
     await Voter.updateMany({}, {
-      $pull: { eligibleElections: { election: req.params.electionId } }
+      $pull: { eligibleElections: { election: req.user.electionId } }
     });
 
-    await Candidate.deleteMany({ electionId: req.params.electionId });
+    await Candidate.deleteMany({ electionId: req.user.electionId });
 
     res.status(200).json({ message: "Election deleted successfully" });
 
@@ -225,30 +239,4 @@ router.delete('/:password/:electionId', jwtAuthMiddleware('admin'), async (req, 
     res.status(500).json({ message: "Error deleting election", error: error.message });
   }
 });
-router.get('/voters/:electionId', jwtAuthMiddleware('admin'), async (req, res) => {
-  try {
-
-    const electionId = req.params.electionId;
-
-    const voters = await Voter.find(
-      { "eligibleElections.election": electionId },
-      {
-        name:1,
-        username:1,
-        eligibleElections:1
-      }
-    );
-
-    res.json(voters);
-
-  } catch (error) {
-
-    res.status(500).json({
-      message:"Error fetching voters",
-      error:error.message
-    });
-
-  }
-});
-
 module.exports = router;

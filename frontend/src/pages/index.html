@@ -1,82 +1,122 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link href="../css/output.css" rel="stylesheet">
   <title>Voting App</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen transition-colors duration-500">
 
-  <!-- Main Container -->
+  <!-- Dark Mode Toggle -->
+  <button id="darkModeToggle" class="fixed top-4 right-4 p-2 rounded bg-gray-200 dark:bg-gray-700">🌙</button>
+
   <div class="min-h-screen flex flex-col items-center justify-center px-6">
 
     <!-- Welcome Section -->
     <div class="text-center mb-10">
-      <h1 class="text-4xl font-bold text-gray-800">
+      <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-100">
         Hey, Welcome to My Voting App 🗳️
       </h1>
-      <p class="mt-3 text-gray-600">
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
         Secure, Simple, and Fast Online Voting
       </p>
     </div>
 
     <!-- Cards Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
-
       <!-- Create Election -->
-      <div class="bg-white p-8 rounded-xl shadow text-center hover:shadow-lg transition">
+      <div class="card bg-white p-8 rounded-xl shadow text-center hover:shadow-xl transform hover:scale-105 transition-all duration-300">
         <h2 class="text-2xl font-semibold mb-4">Create Election</h2>
-        <p class="text-gray-600 mb-6">
-          Start a new election as an admin
-        </p>
-        <button id="create-election-btn"
-        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-          Create Election
-        </button>
+        <p class="text-gray-600 mb-6">Start a new election as an admin</p>
+        <button id="create-election-btn" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Create Election</button>
       </div>
 
       <!-- Login -->
-      <div class="bg-white p-8 rounded-xl shadow text-center hover:shadow-lg transition">
+      <div class="card bg-white p-8 rounded-xl shadow text-center hover:shadow-xl transform hover:scale-105 transition-all duration-300">
         <h2 class="text-2xl font-semibold mb-4">Login</h2>
-        <p class="text-gray-600 mb-6">
-          Login as voter 
-        </p>
-        <button id="login-btn"
-        class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
-          Login
-        </button>
+        <p class="text-gray-600 mb-6">Login as voter</p>
+        <button id="login-btn" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Login</button>
       </div>
 
-      <!-- Login to Particular Election -->
-      <div class="bg-white p-8 rounded-xl shadow text-center hover:shadow-lg transition">
+      <!-- Election Login -->
+      <div class="card bg-white p-8 rounded-xl shadow text-center hover:shadow-xl transform hover:scale-105 transition-all duration-300">
         <h2 class="text-2xl font-semibold mb-4">Election Login</h2>
-        <p class="text-gray-600 mb-6">
-          Login using Election ID and Password
-        </p>
-        <button id="election-login-btn"
-        class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">
-          Login to Election
-        </button>
+        <p class="text-gray-600 mb-6">Login using Election ID and Password</p>
+        <button id="election-login-btn" class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">Login to Election</button>
       </div>
-      <!-- Register -->
-<div class="  bg-white p-8 rounded-xl shadow text-center hover:shadow-lg transition">
-  <h2 class="text-2xl font-semibold mb-4">Register</h2>
-  <p class="text-gray-600 mb-6">
-    Create your voter account
-  </p>
-  <button id="register-btn"
-  class="bg-yellow-600 text-white px-6 py-2 rounded hover:bg-yellow-700">
-    Register Yourself
-  </button>
-</div>
 
+      <!-- Register -->
+      <div class="card bg-white p-8 rounded-xl shadow text-center hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+        <h2 class="text-2xl font-semibold mb-4">Register</h2>
+        <p class="text-gray-600 mb-6">Create your voter account</p>
+        <button id="register-btn" class="bg-yellow-600 text-white px-6 py-2 rounded hover:bg-yellow-700">Register Yourself</button>
+      </div>
     </div>
 
   </div>
 
-  <script src="../js/index.js"></script>
+  <!-- Register Modal -->
+  <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="card bg-white p-8 rounded-xl shadow text-center hover:shadow-xl transform hover:scale-105 transition-all duration-300 md:col-span-3"></div>
+      <h2 class="text-2xl font-semibold mb-4">Register</h2>
+      <form id="registerForm" class="flex flex-col">
+        <input type="text" placeholder="Username" class="border p-2 mb-4 rounded">
+        <input type="password" placeholder="Password" class="border p-2 mb-4 rounded">
+        <button type="submit" class="bg-yellow-600 text-white px-6 py-2 rounded hover:bg-yellow-700">Register</button>
+      </form>
+      <button id="closeRegister" class="absolute top-2 right-2 text-gray-600">✖️</button>
+    </div>
+  </div>
+
+  <script>
+    // Dark Mode Toggle
+    const toggle = document.getElementById("darkModeToggle");
+    toggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+
+    // Card entrance animation
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((card, i) => {
+      card.style.opacity = 0;
+      card.style.transform = "translateY(20px)";
+      setTimeout(() => {
+        card.style.transition = "all 0.5s ease-out";
+        card.style.opacity = 1;
+        card.style.transform = "translateY(0)";
+      }, i * 200);
+    });
+
+    // Button press effect
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach(btn => {
+      btn.addEventListener("mousedown", () => btn.classList.add("scale-95"));
+      btn.addEventListener("mouseup", () => btn.classList.remove("scale-95"));
+    });
+
+    // Register Modal Logic
+    const registerBtn = document.getElementById("register-btn");
+    const modal = document.getElementById("register-modal");
+    const closeModal = document.getElementById("closeRegister");
+
+    registerBtn.addEventListener("click", () => modal.classList.remove("hidden"));
+    closeModal.addEventListener("click", () => modal.classList.add("hidden"));
+
+    // Confetti on register submit
+    document.getElementById("registerForm").addEventListener("submit", e => {
+      e.preventDefault();
+      modal.classList.add("hidden");
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      alert("Registered Successfully!");
+    });
+  </script>
 
 </body>
 </html>

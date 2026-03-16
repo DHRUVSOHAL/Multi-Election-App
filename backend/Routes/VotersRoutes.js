@@ -160,4 +160,47 @@ router.put('/giveVote', jwtAuthMiddleware('voter'), async (req, res) => {
   }
 });
 
+// UPDATE VOTER (ADMIN)
+router.put('/updateVoter/:username', jwtAuthMiddleware('admin'), async (req, res) => {
+  try {
+    const voter = await Voter.findOneAndUpdate({ username: req.params.username }, req.body, { new: true });
+
+    if (!voter) return res.status(404).json({ message: "Voter not found" });
+
+    res.status(200).json({ message: "Voter updated", voter });
+
+  } catch (error) {
+    res.status(500).json({ message: "Error updating voter", error: error.message });
+  }
+});
+
+router.get('/dashboard', jwtAuthMiddleware('voter'), async (req, res) => {
+  try {
+
+    const username = req.user.username;
+
+    const voter = await Voter.findOne({ username : username });
+
+    if (!voter) {
+      return res.status(404).json({ message: "Voter not found" });
+    }
+
+    const elections = voter.eligibleElections.map(e => ({
+      election: e.election,
+      hasVoted: e.hasVoted
+    }));
+
+    res.status(200).json({
+      name: voter.name,
+      age: voter.age,
+      gender: voter.gender,
+      username: voter.username,
+      elections
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

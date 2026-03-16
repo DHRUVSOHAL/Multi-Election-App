@@ -10,7 +10,7 @@ const electionId=decoded.electionId;
 async function loadVoters(){
 
 const res = await fetch(
-`http://localhost:5000/election/voters/${electionId}`,
+`http://localhost:1000/election/voters/${electionId}`,
 {
 headers:{
 "Authorization":"Bearer "+token

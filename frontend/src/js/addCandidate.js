@@ -16,6 +16,7 @@ e.preventDefault();
 const data={
 
 name:document.getElementById("name").value,
+age:document.getElementById("age").value,
 candidateId:document.getElementById("candidateId").value,
 electionId:electionId
 
