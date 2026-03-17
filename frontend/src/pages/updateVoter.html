@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update Profile</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+<div class="bg-white p-8 rounded-xl shadow w-96">
+
+<h2 class="text-2xl font-bold mb-6 text-center">Update Profile</h2>
+
+<form id="updateForm" class="flex flex-col">
+
+<input id="name" type="text" placeholder="Name" class="border p-2 mb-3 rounded">
+
+<input id="age" type="number" placeholder="Age" class="border p-2 mb-3 rounded">
+
+<select id="gender" class="border p-2 mb-3 rounded">
+  <option value="M">M</option>
+  <option value="F">F</option>
+  <option value="other">other</option>
+</select>
+
+
+
+<input id="oldPassword" type="password" placeholder="Old Password (required)" class="border p-2 mb-3 rounded">
+
+<input id="newPassword" type="password" placeholder="New Password" class="border p-2 mb-4 rounded">
+
+<button class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+  Update Profile
+</button>
+
+</form>
+
+</div>
+
+<script src="../js/updateVoter.js"></script>
+
+</body>
+</html>

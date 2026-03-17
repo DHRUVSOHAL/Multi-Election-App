@@ -159,21 +159,51 @@ router.put('/giveVote', jwtAuthMiddleware('voter'), async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-// UPDATE VOTER (ADMIN)
-router.put('/updateVoter/:username', jwtAuthMiddleware('admin'), async (req, res) => {
+router.put('/updateSelf', jwtAuthMiddleware('voter'), async (req, res) => {
   try {
-    const voter = await Voter.findOneAndUpdate({ username: req.params.username }, req.body, { new: true });
+    const username = req.user.username;
 
-    if (!voter) return res.status(404).json({ message: "Voter not found" });
+    const voter = await Voter.findOne({ username });
 
-    res.status(200).json({ message: "Voter updated", voter });
+    if (!voter) {
+      return res.status(404).json({ message: "Voter not found" });
+    }
 
-  } catch (error) {
-    res.status(500).json({ message: "Error updating voter", error: error.message });
+    const { name, age, gender, oldPassword, newPassword } = req.body;
+
+    // 🔐 Step 1: Old password required
+    if (!oldPassword) {
+      return res.status(400).json({ message: "Old password is required" });
+    }
+
+    // 🔐 Step 2: Verify old password
+    const isMatch = await bcrypt.compare(oldPassword, voter.password);
+
+    if (!isMatch) {
+      return res.status(403).json({ message: "Incorrect old password" });
+    }
+
+    // ==========================
+    // Step 3: Update fields
+    // ==========================
+    if (name) voter.name = name;
+    if (age) voter.age = age;
+    if (gender) voter.gender = gender;
+
+    // 🔐 Step 4: Update password (if provided)
+    if (newPassword) {
+      voter.password = newPassword; // will hash automatically
+    }
+
+    await voter.save();
+
+    res.json({ message: "Profile updated successfully" });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
-
+//done
 router.get('/dashboard', jwtAuthMiddleware('voter'), async (req, res) => {
   try {
 

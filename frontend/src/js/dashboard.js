@@ -90,5 +90,8 @@ document.getElementById("logoutBtn").addEventListener("click",()=>{
 localStorage.removeItem("token");
 window.location.href="login.html";
 });
+document.getElementById("updateProfileBtn").addEventListener("click", () => {
+  window.location = "updateVoter.html";
+});
 
 loadDashboard();

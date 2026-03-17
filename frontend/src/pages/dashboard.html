@@ -6,51 +6,49 @@
 <title>Voter Dashboard</title>
 
 <link rel="stylesheet" href="../css/output.css">
-
 </head>
 
 <body class="bg-gray-100 min-h-screen">
 
 <!-- Navbar -->
 <nav class="bg-blue-600 text-white p-4 flex justify-between items-center">
-<h1 class="text-xl font-bold">Voting System</h1>
+  <h1 class="text-xl font-bold">Voting System</h1>
 
-<div>
-<span id="usernameDisplay" class="mr-4"></span>
-<button id="logoutBtn" class="bg-red-500 px-3 py-1 rounded">Logout</button>
-</div>
+  <div>
+    <span id="usernameDisplay" class="mr-4"></span>
+    <button id="logoutBtn" class="bg-red-500 px-3 py-1 rounded">Logout</button>
+  </div>
 </nav>
 
 <!-- Main Container -->
 <div class="max-w-5xl mx-auto mt-8">
 
-<!-- Voter Info -->
-<div class="bg-white shadow-md rounded-xl p-6 mb-6">
+  <!-- Voter Info -->
+  <div class="bg-white shadow-md rounded-xl p-6 mb-6 relative">
 
-<h2 class="text-xl font-semibold mb-4">Voter Information</h2>
+    <h2 class="text-xl font-semibold mb-4">Voter Information</h2>
 
-<div class="grid grid-cols-2 gap-4">
+    <!-- Update Button -->
+    <button 
+      id="updateProfileBtn"
+      class="absolute top-6 right-6 bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">
+      Update Profile
+    </button>
 
-<p><strong>Name:</strong> <span id="voterName"></span></p>
+    <div class="grid grid-cols-2 gap-4">
+      <p><strong>Name:</strong> <span id="voterName"></span></p>
+      <p><strong>Age:</strong> <span id="voterAge"></span></p>
+      <p><strong>Gender:</strong> <span id="voterGender"></span></p>
+      <p><strong>Username:</strong> <span id="voterUsername"></span></p>
+    </div>
 
-<p><strong>Age:</strong> <span id="voterAge"></span></p>
+  </div> <!-- ✅ properly closed -->
 
-<p><strong>Gender:</strong> <span id="voterGender"></span></p>
-
-<p><strong>Username:</strong> <span id="voterUsername"></span></p>
-
-</div>
-
-</div>
-
-<!-- Eligible Elections -->
-<div class="bg-white shadow-md rounded-xl p-6">
-
-<h2 class="text-xl font-semibold mb-4">Eligible Elections</h2>
-
-<div id="electionList" class="space-y-4"></div>
-
-</div>
+  <!-- Eligible Elections -->
+  <div class="bg-white shadow-md rounded-xl p-6">
+    <h2 class="text-xl font-semibold mb-4">Eligible Elections</h2>
+    <div id="electionList" class="space-y-4"></div>
+  </div>
 
 </div>
 
