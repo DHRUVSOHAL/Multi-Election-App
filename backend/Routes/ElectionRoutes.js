@@ -239,4 +239,45 @@ router.delete('/deleteElection', jwtAuthMiddleware('admin'), async (req, res) =>
     res.status(500).json({ message: "Error deleting election", error: error.message });
   }
 });
+//toggled election status (ADMIN) done
+router.put('/toggleElection', jwtAuthMiddleware('admin'), async (req, res) => {
+  try {
+    const election = await Election.findOne({ electionId: req.user.electionId });
+
+    if (!election) {
+      return res.status(404).json({ message: "Election not found" });
+    }
+ 
+
+    // 🔥 TOGGLE
+    election.isActive = !election.isActive;
+
+    await election.save();
+
+    res.json({
+      message: `Election is now ${election.isActive ? "ACTIVE" : "INACTIVE"}`,
+      isActive: election.isActive
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+router.get('/current', jwtAuthMiddleware('admin'), async (req, res) => {
+  try {
+    const election = await Election.findOne({ electionId: req.user.electionId });
+
+    if (!election) {
+      return res.status(404).json({ message: "Election not found" });
+    }
+
+    res.json({
+      title: election.title,
+      isActive: election.isActive
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;

@@ -48,3 +48,4 @@ async function deleteElection(){
     alert("Error deleting election: " + err.message);
   }
 }
+

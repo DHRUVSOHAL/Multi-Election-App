@@ -1,65 +1,54 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-  // ✅ Handle form submission
-  document.getElementById("updateForm").addEventListener("submit", async (e) => {
+document.getElementById("updateForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    // Get token fresh every time
-    const token = localStorage.getItem("voterToken");
-    if (!token) {
-      alert("You must log in first.");
-      window.location.href = "/login.html";
-      return;
-    }
-
+    // 🔹 Get form values
     const name = document.getElementById("name").value;
     const age = document.getElementById("age").value;
     const gender = document.getElementById("gender").value;
     const oldPassword = document.getElementById("oldPassword").value;
     const newPassword = document.getElementById("newPassword").value;
 
+    // 🔹 Get token
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        alert("Please login first!");
+        window.location.href = "login.html";
+        return;
+    }
+
     if (!oldPassword) {
-      return alert("Old password is required");
+        alert("Old password is required!");
+        return;
     }
 
     try {
-      const res = await fetch("http://localhost:1000/vote/updateSelf", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name: name || undefined,
-          age: age ? parseInt(age) : undefined,
-          gender,
-          oldPassword,
-          newPassword: newPassword || undefined,
-        }),
-      });
+        const response = await fetch("http://localhost:1000/vote/updateSelf", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                name,
+                age,
+                gender,
+                oldPassword,
+                newPassword
+            })
+        });
 
-      let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = {};
-      }
+        const data = await response.json();
 
-      if (!res.ok) {
-        if (res.status === 401 || res.status === 403) {
-          alert("Session expired. Please log in again.");
-          window.location.href = "/login.html";
-          return;
+        if (response.ok) {
+            alert("✅ Profile updated successfully");
+            window.location.href = "dashboard.html";
+        } else {
+            alert("❌ " + data.message);
         }
-        return alert(data.message || data.error || "Update failed");
-      }
 
-      alert(data.message || "Profile updated successfully!");
-      // Optionally redirect back to dashboard
-      window.location.href = "/dashboard.html";
     } catch (err) {
-      console.error(err);
-      alert("Server connection failed. Check if your backend is running.");
+        console.error(err);
+        alert("Something went wrong!");
     }
-  });
 });

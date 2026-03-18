@@ -14,15 +14,32 @@
   <div class="min-h-screen p-6">
 
     <!-- Header -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-800">
-        Election Admin Panel ⚙️
-      </h1>
-      <p class="text-gray-500 mt-1">
-        Manage voters, candidates, and elections
-      </p>
-    </div>
+  <div class="mb-10 relative">
 
+  <!-- Top Right Toggle Button -->
+  <button
+    id="toggleElectionBtn"
+    class="absolute top-0 right-0 px-5 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition shadow"
+  >
+    Loading...
+  </button>
+
+  <!-- Center Content -->
+  <div class="text-center mt-6">
+    
+    <!-- Main Heading = Election Title -->
+    <h1 id="electionTitle" class="text-4xl font-bold text-gray-800 mb-2">
+      Loading...
+    </h1>
+
+    <!-- Subheading -->
+    <p class="text-gray-500 text-lg">
+      Election Admin Panel ⚙️
+    </p>
+
+  </div>
+
+</div>
     <!-- Action Buttons Grid -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -96,7 +113,7 @@
       </p>
 
       <button onclick="location.href='voters_list.html'"
-      class="w-full bg-yellow-600 text-white py-2 rounded hover:bg-yellow-700">
+      class="w-full bg-yellow-600 text-black py-2 rounded hover:bg-yellow-700">
         View Voters
       </button>
     </div>
