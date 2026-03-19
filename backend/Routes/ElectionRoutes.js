@@ -263,6 +263,8 @@ router.put('/toggleElection', jwtAuthMiddleware('admin'), async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// done
 router.get('/current', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
     const election = await Election.findOne({ electionId: req.user.electionId });

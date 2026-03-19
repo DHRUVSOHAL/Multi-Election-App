@@ -1,95 +1,78 @@
 const token = localStorage.getItem("token");
 
 if(!token){
-alert("Please login first");
-window.location.href="login.html";
+  alert("Please login first");
+  window.location.href="login.html";
 }
 
 async function loadDashboard(){
 
-const res = await fetch("http://localhost:1000/vote/dashboard",{
-headers:{
-"Authorization":`Bearer ${token}`
-}
-});
+  const res = await fetch("http://localhost:1000/vote/dashboard",{
+    headers:{
+      "Authorization":`Bearer ${token}`
+    }
+  });
 
-const data = await res.json();
+  // ✅ error handling
+  if(!res.ok){
+    alert("Session expired, login again");
+    localStorage.removeItem("token");
+    window.location.href="login.html";
+    return;
+  }
 
-document.getElementById("voterName").innerText = data.name;
-document.getElementById("voterAge").innerText = data.age;
-document.getElementById("voterGender").innerText = data.gender;
-document.getElementById("voterUsername").innerText = data.username;
-document.getElementById("usernameDisplay").innerText = data.username;
+  const data = await res.json();
 
-const container = document.getElementById("electionList");
-container.innerHTML="";
+  document.getElementById("voterName").innerText = data.name;
+  document.getElementById("voterAge").innerText = data.age;
+  document.getElementById("voterGender").innerText = data.gender;
+  document.getElementById("voterUsername").innerText = data.username;
+  document.getElementById("usernameDisplay").innerText = data.username;
 
-data.elections.forEach(e => {
+  const container = document.getElementById("electionList");
+  container.innerHTML="";
 
-let card = document.createElement("div");
+  data.elections.forEach(e => {
 
-card.className = "border rounded-lg p-4 flex justify-between items-center";
+    let card = document.createElement("div");
 
-card.innerHTML = `
-<div>
-<h3 class="font-semibold text-lg">${e.election}</h3>
-<p class="text-sm text-gray-500">
-${e.hasVoted ? "Status: Voted" : "Status: Not Voted"}
-</p>
-</div>
+    card.className = "border rounded-lg p-4 flex justify-between items-center";
 
-${e.hasVoted 
-? `<span class="text-green-600 font-semibold">Already Voted</span>`
-: `<button class="voteBtn bg-blue-500 text-white px-4 py-2 rounded"
-data-election="${e.election}">
-Vote
-</button>`
-}
-`;
+    card.innerHTML = `
+    <div>
+      <h3 class="font-semibold text-lg">${e.electionId}</h3>
+      <p class="text-sm text-gray-500">
+        ${e.hasVoted ? "Status: Voted" : "Status: Not Voted"}
+      </p>
+    </div>
 
-container.appendChild(card);
+    ${e.hasVoted 
+      ? `<span class="text-green-600 font-semibold">Already Voted</span>`
+      : `<button class="voteBtn bg-blue-500 text-white px-4 py-2 rounded"
+        data-election="${e.electionId}">
+        Vote
+      </button>`
+    }
+    `;
 
-});
+    container.appendChild(card);
+  });
 
-document.querySelectorAll(".voteBtn").forEach(btn=>{
-btn.addEventListener("click",vote);
-});
+  document.querySelectorAll(".voteBtn").forEach(btn=>{
+    btn.addEventListener("click", (e) => {
 
-}
+      const electionId = e.target.dataset.election;
 
-async function vote(event){
-
-const electionId = event.target.dataset.election;
-const candidateId = prompt("Enter Candidate ID");
-
-const res = await fetch("http://localhost:1000/vote/giveVote",{
-
-method:"PUT",
-
-headers:{
-"Content-Type":"application/json",
-"Authorization":`Bearer ${token}`
-},
-
-body:JSON.stringify({
-electionId,
-candidateId
-})
-
-});
-
-const data = await res.json();
-
-alert(data.message);
-
-loadDashboard();
-
+      window.location.href = `vote.html?electionId=${electionId}`;
+    });
+  });
 }
 
 document.getElementById("logoutBtn").addEventListener("click",()=>{
-localStorage.removeItem("token");
-window.location.href="login.html";
+  localStorage.removeItem("token");
+  window.location.href="login.html";
 });
+
 document.getElementById("updateProfileBtn").addEventListener("click", () => {
   window.location = "updateVoter.html";
 });

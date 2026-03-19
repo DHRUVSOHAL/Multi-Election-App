@@ -159,6 +159,8 @@ router.put('/giveVote', jwtAuthMiddleware('voter'), async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+//DONE
 router.put('/updateSelf', jwtAuthMiddleware('voter'), async (req, res) => {
   try {
     const username = req.user.username;
@@ -209,14 +211,14 @@ router.get('/dashboard', jwtAuthMiddleware('voter'), async (req, res) => {
 
     const username = req.user.username;
 
-    const voter = await Voter.findOne({ username : username });
+    const voter = await Voter.findOne({ username });
 
     if (!voter) {
       return res.status(404).json({ message: "Voter not found" });
     }
 
     const elections = voter.eligibleElections.map(e => ({
-      election: e.election,
+      electionId: e.election,   // ✅ FIXED
       hasVoted: e.hasVoted
     }));
 
@@ -232,5 +234,19 @@ router.get('/dashboard', jwtAuthMiddleware('voter'), async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+router.get('/candidates/:electionId', jwtAuthMiddleware('voter'), async (req, res) => {
+  try {
 
+    const { electionId } = req.params;
+
+    const candidates = await Candidate
+      .find({ electionId })
+      .select("-_id -__v");
+
+    res.status(200).json(candidates);
+
+  } catch (err) { 
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;
