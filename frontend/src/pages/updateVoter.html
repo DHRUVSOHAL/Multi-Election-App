@@ -4,35 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Update Profile</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="../css/output.css">
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen flex items-center justify-center">
 
-<div class="bg-white p-8 rounded-xl shadow w-96">
+<div class="backdrop-blur-lg bg-white/80 p-8 rounded-2xl shadow-xl w-96 border border-white/40">
 
-<h2 class="text-2xl font-bold mb-6 text-center">Update Profile</h2>
+<h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
+  Update Profile
+</h2>
 
 <form id="updateForm" class="flex flex-col">
 
-<input id="name" type="text" placeholder="Name" class="border p-2 mb-3 rounded">
+<input id="name" type="text" placeholder="Name"
+class="border p-2 mb-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
 
-<input id="age" type="number" placeholder="Age" class="border p-2 mb-3 rounded">
+<input id="age" type="number" placeholder="Age"
+class="border p-2 mb-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition">
 
-<select id="gender" class="border p-2 mb-3 rounded">
-  <option value="M">M</option>
-  <option value="F">F</option>
-  <option value="other">other</option>
+<select id="gender"
+class="border p-2 mb-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 transition">
+  <option value="">Select Gender</option>
+  <option value="M">Male</option>
+  <option value="F">Female</option>
+  <option value="other">Other</option>
 </select>
 
+<input id="oldPassword" type="password" placeholder="Old Password (required)"
+class="border p-2 mb-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition">
 
+<input id="newPassword" type="password" placeholder="New Password"
+class="border p-2 mb-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition">
 
-<input id="oldPassword" type="password" placeholder="Old Password (required)" class="border p-2 mb-3 rounded">
-
-<input id="newPassword" type="password" placeholder="New Password" class="border p-2 mb-4 rounded">
-
-<button class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+<button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg hover:opacity-90 transition font-semibold">
   Update Profile
 </button>
 

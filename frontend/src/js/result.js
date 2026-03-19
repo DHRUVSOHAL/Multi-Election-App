@@ -1,37 +1,49 @@
 const token = localStorage.getItem("adminToken");
 
-function parseJwt(token){
-return JSON.parse(atob(token.split('.')[1]));
-}
+async function loadResults() {
+  try {
+    const res = await fetch(
+      `http://localhost:1000/election/result/`,
+      {
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      }
+    );
 
-const decoded=parseJwt(token);
-const electionId=decoded.electionId;
+    const data = await res.json();
 
-async function loadResults(){
+    const table = document.getElementById("resultsTable");
 
-const res = await fetch(`http://localhost:1000/election/result/`,{
+    // ✅ Empty check
+    if (!data.results || data.results.length === 0) {
+      table.innerHTML = `
+        <tr>
+          <td colspan="2" class="p-3 text-gray-500">
+            No results found
+          </td>
+        </tr>
+      `;
+      return;
+    }
 
-headers:{
-"Authorization":"Bearer "+token
-}
+    // ✅ Efficient rendering
+    let rows = "";
 
-});
+    data.results.forEach(c => {
+      rows += `
+        <tr class="border-t">
+          <td class="p-3">${c.name}</td>
+          <td class="p-3 font-semibold text-blue-600">${c.votes}</td>
+        </tr>
+      `;
+    });
 
-const data = await res.json();
+    table.innerHTML = rows;
 
-const table=document.getElementById("resultsTable");
-
-data.results.forEach(c=>{
-
-table.innerHTML+=`
-<tr>
-<td class="p-3">${c.name}</td>
-<td class="p-3">${c.votes}</td>
-</tr>
-`;
-
-});
-
+  } catch (err) {
+    console.error("Error loading results:", err);
+  }
 }
 
 loadResults();

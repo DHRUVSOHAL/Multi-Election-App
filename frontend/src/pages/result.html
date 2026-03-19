@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-<link href="../css/output.css" rel="stylesheet">
-<title>Results</title>
+  <link href="../css/output.css" rel="stylesheet">
+  <title>Results</title>
 </head>
 
 <body class="bg-gray-100 p-10">
 
-<h1 class="text-3xl font-bold mb-6">Election Results</h1>
+  <h1 class="text-3xl font-bold mb-6 text-center">Election Results</h1>
 
-<table class="w-full bg-white rounded shadow">
+  <table class="w-full bg-white rounded shadow text-center">
 
-<thead class="bg-gray-200">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="p-3">Candidate</th>
+        <th class="p-3">Votes</th>
+      </tr>
+    </thead>
 
-<tr>
+    <!-- ✅ Important -->
+    <tbody id="resultsTable"></tbody>
 
-<th class="p-3">Candidate</th>
-<th class="p-3">Votes</th>
+  </table>
 
-</tr>
-
-</thead>
-
-<tbody id="resultsTable"></tbody>
-
-</table>
-
-<script src="../js/result.js"></script>
+  <script src="../js/result.js"></script>
 
 </body>
 </html>

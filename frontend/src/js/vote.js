@@ -43,19 +43,18 @@ async function loadCandidates(){
 
     const card = document.createElement("div");
 
-    card.className = "bg-white p-4 rounded shadow flex justify-between items-center";
+   card.className = "bg-white p-5 rounded-xl shadow hover:shadow-lg transition flex flex-col md:flex-row justify-between items-start md:items-center gap-4";
+   card.innerHTML = `
+  <div class="flex-1">
+    <h2 class="font-semibold text-lg">${c.name}</h2>
+    <p class="text-gray-500 text-sm">Candidate ID: ${c.candidateId}</p>
+  </div>
 
-    card.innerHTML = `
-      <div>
-        <h2 class="font-semibold">${c.name}</h2>
-        <p class="text-gray-500 text-sm">Candidate ID: ${c.candidateId}</p>
-      </div>
-
-      <button class="voteNow bg-green-500 text-white px-4 py-2 rounded"
-        data-id="${c.candidateId}">
-        Vote
-      </button>
-    `;
+  <button class="voteNow bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full md:w-auto"
+    data-id="${c.candidateId}">
+    Vote
+  </button>
+`;
 
     container.appendChild(card);
   });

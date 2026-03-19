@@ -8,19 +8,19 @@
 <link href="../css/output.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen">
 
-<div class="min-h-screen flex items-center justify-center px-4 mt-20">
+<div class="min-h-screen flex items-center justify-center px-4">
 
-<div class="bg-white w-full max-w-2xl rolounded-xl shadow-lg p-8">
+<div class="backdrop-blur-lg bg-white/80 w-full max-w-2xl rounded-2xl shadow-xl p-8 border border-white/40">
 
 <!-- Header -->
-<h1 class="text-3xl font-bold text-gray-800 mb-2 flex justify-center items-center gap-2">
-Create New Election 🗳️
+<h1 class="text-3xl font-bold text-gray-800 mb-2 text-center">
+  Create New Election 🗳️
 </h1>
 
-<p class="text-gray-500 mb-6">
-Fill in election details carefully
+<p class="text-gray-500 mb-6 text-center">
+  Fill in election details carefully
 </p>
 
 <!-- FORM -->
@@ -31,7 +31,7 @@ Fill in election details carefully
 <label class="block text-sm font-semibold mb-1">Election Title</label>
 <input id="title" type="text"
 placeholder="Student Council Election"
-class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
 </div>
 
 <!-- Description -->
@@ -39,7 +39,7 @@ class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outli
 <label class="block text-sm font-semibold mb-1">Description</label>
 <textarea id="description" rows="3"
 placeholder="Election details..."
-class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition"></textarea>
 </div>
 
 <!-- Dates -->
@@ -48,13 +48,13 @@ class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outli
 <div>
 <label class="block text-sm font-semibold mb-1">Start Date</label>
 <input id="startDate" type="date"
-class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
 </div>
 
 <div>
 <label class="block text-sm font-semibold mb-1">End Date</label>
 <input id="endDate" type="date"
-class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition">
 </div>
 
 </div>
@@ -64,15 +64,21 @@ class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outli
 <label class="block text-sm font-semibold mb-1">Election ID</label>
 <input id="electionId" type="text"
 placeholder="ELEC-2026-001"
-class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 transition">
 </div>
 
 <!-- Password -->
-<div>
+<div class="relative">
 <label class="block text-sm font-semibold mb-1">Admin Password</label>
 <input id="password" type="password"
 placeholder="Secure password"
-class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition">
+
+<!-- 👁 Toggle -->
+<button type="button" id="togglePassword"
+class="absolute right-3 top-9 text-gray-500">
+👁
+</button>
 </div>
 
 <!-- Active -->
@@ -86,7 +92,7 @@ Set Election Active
 
 <!-- Submit -->
 <button type="submit"
-class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition">
+class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition">
 Create Election
 </button>
 
@@ -98,8 +104,16 @@ Create Election
 
 </div>
 
-</body>
+<!-- JS -->
+<script>
+// 👁 Show/Hide Password
+document.getElementById("togglePassword").addEventListener("click", () => {
+  const pass = document.getElementById("password");
+  pass.type = pass.type === "password" ? "text" : "password";
+});
+</script>
 
 <script src="../js/createElection.js"></script>
 
+</body>
 </html>

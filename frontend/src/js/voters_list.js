@@ -27,9 +27,8 @@ voters.forEach(v=>{
 const election = v.eligibleElections.find(
 e=>e.election===electionId
 );
-
-table.innerHTML+=`
-<tr class="border-t">
+table.innerHTML += `
+<tr class="border-t text-center">
 
 <td class="p-3">${v.name}</td>
 <td class="p-3">${v.username}</td>
@@ -40,6 +39,7 @@ ${election.hasVoted ? "✅ Yes" : "❌ No"}
 
 </tr>
 `;
+
 
 });
 
