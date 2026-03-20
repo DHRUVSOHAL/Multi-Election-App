@@ -39,7 +39,7 @@ const data = await res.json();
 if(res.ok){
 
 // save JWT token
-localStorage.setItem("token", data.token);
+localStorage.setItem("adminToken", data.token);
 
 // optional: store electionId too
 localStorage.setItem("electionId", electionId);

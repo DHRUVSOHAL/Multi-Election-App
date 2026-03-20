@@ -13,12 +13,12 @@
     --color-red-700: oklch(50.5% 0.213 27.518);
     --color-yellow-600: oklch(68.1% 0.162 75.834);
     --color-yellow-700: oklch(55.4% 0.135 66.442);
-    --color-green-100: oklch(96.2% 0.044 156.743);
     --color-green-400: oklch(79.2% 0.209 151.711);
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-600: oklch(62.7% 0.194 149.214);
     --color-green-700: oklch(52.7% 0.154 150.069);
     --color-blue-100: oklch(93.2% 0.032 255.585);
+    --color-blue-300: oklch(80.9% 0.105 251.813);
     --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
@@ -34,7 +34,6 @@
     --color-pink-400: oklch(71.8% 0.202 349.761);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
-    --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-gray-600: oklch(44.6% 0.03 256.802);
@@ -246,8 +245,14 @@
   .top-6 {
     top: calc(var(--spacing) * 6);
   }
+  .top-9 {
+    top: calc(var(--spacing) * 9);
+  }
   .right-0 {
     right: calc(var(--spacing) * 0);
+  }
+  .right-2 {
+    right: calc(var(--spacing) * 2);
   }
   .right-3 {
     right: calc(var(--spacing) * 3);
@@ -296,9 +301,6 @@
   }
   .mt-12 {
     margin-top: calc(var(--spacing) * 12);
-  }
-  .mt-20 {
-    margin-top: calc(var(--spacing) * 20);
   }
   .mr-4 {
     margin-right: calc(var(--spacing) * 4);
@@ -386,9 +388,6 @@
   }
   .justify-center {
     justify-content: center;
-  }
-  .gap-2 {
-    gap: calc(var(--spacing) * 2);
   }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
@@ -880,14 +879,9 @@
       background-color: var(--color-gray-700);
     }
   }
-  .dark\:text-gray-300 {
+  .dark\:text-blue-300 {
     @media (prefers-color-scheme: dark) {
-      color: var(--color-gray-300);
-    }
-  }
-  .dark\:text-green-100 {
-    @media (prefers-color-scheme: dark) {
-      color: var(--color-green-100);
+      color: var(--color-blue-300);
     }
   }
 }
