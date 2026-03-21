@@ -41,7 +41,7 @@ async function deleteElection(){
 
     if(res.ok){
       localStorage.removeItem("adminToken");
-      window.location.href = "admin_login.html";
+      window.location.href = "./admin_login.html";
     }
 
   } catch (err) {

@@ -74,12 +74,12 @@ function updateToggleUI(isActive) {
 }
 
 // --- 3. Navigation Buttons ---
-document.getElementById("addVoterBtn").onclick = () => window.location.href = "addVoter.html";
-document.getElementById("addCandidateBtn").onclick = () => window.location.href = "addCandidate.html";
-document.getElementById("deleteVoterBtn").onclick = () => window.location.href = "deleteVoter.html";
-document.getElementById("deleteCandidateBtn").onclick = () => window.location.href = "deleteCandidate.html";
-document.getElementById("manageElectionBtn").onclick = () => window.location.href = "manageElection.html";
-document.getElementById("resultsBtn").onclick = () => window.location.href = "result.html";
+document.getElementById("addVoterBtn").onclick = () => window.location.href = "./addVoter.html";
+document.getElementById("addCandidateBtn").onclick = () => window.location.href = "./addCandidate.html";
+document.getElementById("deleteVoterBtn").onclick = () => window.location.href = "./deleteVoter.html";
+document.getElementById("deleteCandidateBtn").onclick = () => window.location.href = "./deleteCandidate.html";
+document.getElementById("manageElectionBtn").onclick = () => window.location.href = "./manageElection.html";
+document.getElementById("resultsBtn").onclick = () => window.location.href = "./result.html";
 
 // Initial Execution
 fetchElectionStatus();

@@ -42,7 +42,7 @@ document.getElementById("updateForm").addEventListener("submit", async function 
 
         if (response.ok) {
             alert("✅ Profile updated successfully");
-            window.location.href = "dashboard.html";
+            window.location.href = "./dashboard.html";
         } else {
             alert("❌ " + data.message);
         }

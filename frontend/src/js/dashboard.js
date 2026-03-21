@@ -63,18 +63,18 @@ async function loadDashboard(){
 
       const electionId = e.target.dataset.election;
 
-      window.location.href = `vote.html?electionId=${electionId}`;
+      window.location.href = `./vote.html?electionId=${electionId}`;
     });
   });
 }
 
 document.getElementById("logoutBtn").addEventListener("click",()=>{
   localStorage.removeItem("token");
-  window.location.href="login.html";
+  window.location.href="./login.html";
 });
 
 document.getElementById("updateProfileBtn").addEventListener("click", () => {
-  window.location = "updateVoter.html";
+  window.location = "./updateVoter.html";
 });
 
 loadDashboard();

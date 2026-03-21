@@ -2,7 +2,7 @@ const token = localStorage.getItem("token");
 
 if(!token){
   alert("Login first");
-  window.location.href = "login.html";
+  window.location.href = "./login.html";
 }
 
 // get electionId
@@ -95,7 +95,7 @@ async function giveVote(e){
 
   alert(data.message);
 
-  window.location.href = "dashboard.html";
+  window.location.href = "./dashboard.html";
 }
 
 loadCandidates();

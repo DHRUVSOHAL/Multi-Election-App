@@ -49,7 +49,7 @@ document.getElementById("message").innerText =
 
 setTimeout(()=>{
 
-window.location.href = "admin.html";
+window.location.href = "./admin.html";
 
 },1500);
 

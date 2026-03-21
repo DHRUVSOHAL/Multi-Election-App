@@ -32,7 +32,7 @@ localStorage.setItem("adminToken",data.token);
 
 alert("Login successful");
 
-window.location.href="admin.html";
+window.location.href="./admin.html";
 
 }else{
 

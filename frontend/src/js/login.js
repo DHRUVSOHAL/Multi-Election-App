@@ -32,11 +32,11 @@ localStorage.setItem("token", data.token);
 
 
 
-window.location.href = "dashboard.html";
+window.location.href = "./dashboard.html";
 
 }else{
 
-alert(data.message || "Login failed");
+alert(data.message || "./Login failed");
 
 }
 
