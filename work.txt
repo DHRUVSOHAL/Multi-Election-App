@@ -16,4 +16,4 @@ npx tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch
 create election ask add candidate and add voters
 
 
-mongodb+srv://sohaldhruv00_db_user:esbjlJkJ3TbWlKTN@electionapp.8mv06h9.mongodb.net/?appName=ElectionApp
+mongodb+srv://sohaldhruv00_db_user:esbjlJkJ3TbW@electionapp.8mv06h9.mongodb.net/?appName=ElectionApp

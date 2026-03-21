@@ -40,7 +40,7 @@ async function loadDashboard(){
 
     card.innerHTML = `
     <div>
-      <h3 class="font-semibold text-lg">${e.electionId}</h3>
+      <h3 class="font-semibold text-lg">${e.title}</h3>
       <p class="text-sm text-gray-500">
         ${e.hasVoted ? "Status: Voted" : "Status: Not Voted"}
       </p>
