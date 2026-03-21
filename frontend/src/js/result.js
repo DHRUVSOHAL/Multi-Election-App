@@ -1,25 +1,30 @@
 const token = localStorage.getItem("adminToken");
 
+if (!token) {
+  alert("Admin not logged in");
+  window.location.href = "./admin_login.html";
+}
+
 async function loadResults() {
   try {
-    const res = await fetch(
-      `https://multi-election-app.onrender.com/election/result/`,
-      {
-        headers: {
-          "Authorization": "Bearer " + token
-        }
+    const res = await fetch(`https://multi-election-app.onrender.com/election/result/`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
       }
-    );
+    });
+
+    if (!res.ok) {
+      alert("Failed to load results. Please try again.");
+      return;
+    }
 
     const data = await res.json();
-
     const table = document.getElementById("resultsTable");
 
-    // ✅ Empty check
     if (!data.results || data.results.length === 0) {
       table.innerHTML = `
         <tr>
-          <td colspan="2" class="p-3 text-gray-500">
+          <td colspan="2" class="p-3 text-gray-500 text-center">
             No results found
           </td>
         </tr>
@@ -27,9 +32,7 @@ async function loadResults() {
       return;
     }
 
-    // ✅ Efficient rendering
     let rows = "";
-
     data.results.forEach(c => {
       rows += `
         <tr class="border-t">
@@ -43,6 +46,7 @@ async function loadResults() {
 
   } catch (err) {
     console.error("Error loading results:", err);
+    alert("Error loading results. Please try again.");
   }
 }
 

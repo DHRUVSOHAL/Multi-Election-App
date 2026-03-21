@@ -1,5 +1,10 @@
 const token = localStorage.getItem("adminToken");
 
+if (!token) {
+  alert("Admin not logged in");
+  window.location.href = "./admin_login.html";
+}
+
 function parseJwt(token){
   const base64Url = token.split('.')[1];
   const base64 = atob(base64Url);
@@ -15,7 +20,7 @@ document.getElementById("deleteElectionBtn")
   .addEventListener("click", deleteElection);
 
 async function deleteElection(){
-  const password = document.getElementById("password").value;
+  const password = document.getElementById("password").value.trim();
 
   if(!password){
     alert("Enter password");
@@ -28,7 +33,7 @@ async function deleteElection(){
       {
         method: "DELETE",
         headers: {
-          "Authorization": "Bearer " + token,
+          "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ password })  // ✅ send password to backend
@@ -37,7 +42,7 @@ async function deleteElection(){
 
     const data = await res.json();
 
-    alert(data.message);
+    alert(data.message || "Operation complete");
 
     if(res.ok){
       localStorage.removeItem("adminToken");
@@ -45,7 +50,7 @@ async function deleteElection(){
     }
 
   } catch (err) {
-    alert("Error deleting election: " + err.message);
+    console.error(err);
+    alert("Error deleting election. Please try again.");
   }
 }
-

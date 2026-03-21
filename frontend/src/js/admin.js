@@ -41,7 +41,7 @@ async function fetchElectionStatus() {
 toggleBtn.onclick = async () => {
 
   try {
-    const response = await fetch('http://localhost:1000/election/toggleElection', {
+    const response = await fetch('https://multi-election-app.onrender.com/election/toggleElection', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
