@@ -23,7 +23,7 @@ document.getElementById("updateForm").addEventListener("submit", async function 
     }
 
     try {
-        const response = await fetch("http://localhost:1000/vote/updateSelf", {
+        const response = await fetch("https://multi-election-app.onrender.com/vote/updateSelf", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

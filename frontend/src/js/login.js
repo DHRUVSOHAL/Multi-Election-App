@@ -9,7 +9,7 @@ const password = document.getElementById("password").value;
 
 try {
 
-const response = await fetch("http://localhost:1000/vote/login", {
+const response = await fetch("https://multi-election-app.onrender.com/vote/login", {
 
 method: "POST",
 

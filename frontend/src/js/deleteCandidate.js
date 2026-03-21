@@ -14,7 +14,7 @@ async function deleteCandidate() {
 const candidateId = document.getElementById("candidateId").value;
 
 const res = await fetch(
-`http://localhost:1000/election/deleteCandidate/${candidateId}`,
+`https://multi-election-app.onrender.com/election/deleteCandidate/${candidateId}`,
 {
 method: "DELETE",
 headers: {

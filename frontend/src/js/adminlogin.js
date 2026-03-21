@@ -10,7 +10,7 @@ alert("Please fill all fields");
 return;
 }
 
-const res = await fetch("http://localhost:1000/election/adminLogin",{
+const res = await fetch("https://multi-election-app.onrender.com/election/adminLogin",{
 method:"POST",
 
 headers:{

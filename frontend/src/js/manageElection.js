@@ -24,7 +24,7 @@ async function deleteElection(){
 
   try {
     const res = await fetch(
-      `http://localhost:1000/election/deleteElection`,
+      `https://multi-election-app.onrender.com/election/deleteElection`,
       {
         method: "DELETE",
         headers: {

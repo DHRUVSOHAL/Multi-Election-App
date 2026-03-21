@@ -13,7 +13,7 @@ if(!name || !age || !gender || !username || !password){
 
 try{
 
-const res = await fetch("http://localhost:1000/vote/addVoter",{
+const res = await fetch("https://multi-election-app.onrender.com/vote/addVoter",{
     method:"POST",
     headers:{
         "Content-Type":"application/json"

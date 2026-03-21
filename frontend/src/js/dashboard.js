@@ -7,7 +7,7 @@ if(!token){
 
 async function loadDashboard(){
 
-  const res = await fetch("http://localhost:1000/vote/dashboard",{
+  const res = await fetch("https://multi-election-app.onrender.com/vote/dashboard",{
     headers:{
       "Authorization":`Bearer ${token}`
     }

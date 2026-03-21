@@ -17,7 +17,7 @@ if(!electionId){
 
 async function loadCandidates(){
 
-  const res = await fetch(`http://localhost:1000/vote/candidates/${electionId}`,{
+  const res = await fetch(`https://multi-election-app.onrender.com/vote/candidates/${electionId}`,{
     headers:{
       "Authorization": `Bearer ${token}`
     }
@@ -73,7 +73,7 @@ async function giveVote(e){
     return;
   }
 
-  const res = await fetch("http://localhost:1000/vote/giveVote",{
+  const res = await fetch("https://multi-election-app.onrender.com/vote/giveVote",{
     method:"PUT",
     headers:{
       "Content-Type":"application/json",

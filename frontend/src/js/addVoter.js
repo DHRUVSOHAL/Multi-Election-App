@@ -21,7 +21,7 @@ electionId:electionId
 
 };
 
-const res = await fetch("http://localhost:1000/election/addVoters",{
+const res = await fetch("https://multi-election-app.onrender.com/election/addVoters",{
 
 method:"POST",
 

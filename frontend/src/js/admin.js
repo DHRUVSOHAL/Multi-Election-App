@@ -23,7 +23,7 @@ const toggleBtn = document.getElementById("toggleElectionBtn");
 async function fetchElectionStatus() {
   try {
     // Note: Ensure the URL matches your server's route prefix (e.g., /api/election/current)
-    const response = await fetch('http://localhost:1000/election/current', { 
+    const response = await fetch('https://multi-election-app.onrender.com/election/current', { 
       headers: { 'Authorization': `Bearer ${token}` }
     });
 

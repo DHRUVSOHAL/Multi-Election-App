@@ -14,7 +14,7 @@ const isActive = document.getElementById("isActive").checked;
 
 try{
 
-const res = await fetch("http://localhost:1000/election",{
+const res = await fetch("https://multi-election-app.onrender.com/election",{
 
 method:"POST",
 

@@ -3,7 +3,7 @@ const token = localStorage.getItem("adminToken");
 async function loadResults() {
   try {
     const res = await fetch(
-      `http://localhost:1000/election/result/`,
+      `https://multi-election-app.onrender.com/election/result/`,
       {
         headers: {
           "Authorization": "Bearer " + token
