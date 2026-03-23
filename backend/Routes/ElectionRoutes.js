@@ -41,7 +41,7 @@ router.post('/addVoters', jwtAuthMiddleware('admin'), async (req, res) => {
   try {
 
     const { username } = req.body;
-    const electionId = req.user.electionId;   // ✅ from token
+    const electionId = req.user.electionId;   //  from token
 
     let voter = await Voter.findOne({ username });
 

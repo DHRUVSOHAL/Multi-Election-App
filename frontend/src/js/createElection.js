@@ -22,8 +22,7 @@ form.addEventListener("submit", async (e) => {
     const res = await fetch("https://multi-election-app.onrender.com/election", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         title,
@@ -44,7 +43,7 @@ form.addEventListener("submit", async (e) => {
       localStorage.setItem("electionId", electionId);
 
       document.getElementById("message").innerText =
-        "Election Created Successfully ✅ Redirecting...";
+        "Election Created Successfully Redirecting...";
 
       setTimeout(() => {
         window.location.href = "./admin.html";
