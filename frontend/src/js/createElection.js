@@ -3,12 +3,6 @@ const form = document.getElementById("createElectionForm");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const token = localStorage.getItem("adminToken");
-  if (!token) {
-    alert("Admin not logged in");
-    window.location.href = "./admin_login.html";
-    return;
-  }
 
   const title = document.getElementById("title").value;
   const description = document.getElementById("description").value;
